@@ -4,6 +4,7 @@ use App\Livewire\BatchDetailsManagement;
 use App\Livewire\BatchManagement;
 use App\Livewire\CourseManagement;
 use App\Livewire\EnrollManagement;
+use App\Livewire\GalleryManagement;
 use  App\Livewire\Student\StudentIndex;
 use App\Livewire\Student\StudentCreate;
 use App\Livewire\Student\StudentEdit;
@@ -33,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/batchdetails",BatchDetailsManagement::class)->name("batchdetails");
     Route::get("/course",CourseManagement::class)->name("course");
     Route::get("/enroll",EnrollManagement::class)->name("enroll");
-
+    Route::get("/gallery",GalleryManagement::class)->name("gallery");
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');

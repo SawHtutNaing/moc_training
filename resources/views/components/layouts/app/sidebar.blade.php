@@ -20,6 +20,7 @@
                     <flux:navlist.item icon="users" :href="route('course')" :current="request()->routeIs('course')" wire:navigate>{{ __('Course') }}</flux:navlist.item>
                     <flux:navlist.item icon="users" :href="route('enroll')" :current="request()->routeIs('enroll')" wire:navigate>{{ __('Enroll') }}</flux:navlist.item>
                     <flux:navlist.item icon="users" :href="route('batchdetails')" :current="request()->routeIs('enroll')" wire:navigate>{{ __('BatchDetails') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('gallery')" :current="request()->routeIs('enroll')" wire:navigate>{{ __('Gallery') }}</flux:navlist.item>
 
                 </flux:navlist.group>
             </flux:navlist>
