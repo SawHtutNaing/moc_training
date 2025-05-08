@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\BatchDetailsManagement;
 use App\Livewire\BatchManagement;
 use App\Livewire\CourseManagement;
 use App\Livewire\EnrollManagement;
@@ -29,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get("/teacher",TeacherManagement::class)->name("teacher");
     Route::get("/batch",BatchManagement::class)->name("batch");
+    Route::get("/batchdetails",BatchDetailsManagement::class)->name("batchdetails");
     Route::get("/course",CourseManagement::class)->name("course");
     Route::get("/enroll",EnrollManagement::class)->name("enroll");
 
