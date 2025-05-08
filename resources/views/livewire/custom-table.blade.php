@@ -33,7 +33,7 @@
                                 <button
                                     wire:click="triggerAction('{{ $action['event'] }}', {{ $row->id }})"
                                     @if (isset($action['confirm']) && $action['confirm'])
-                                        onclick="return confirm('{{ $action['confirmMessage'] ?? 'Are you sure?' }}')"
+                                        wire:confirm="{{ $action['confirmMessage'] ?? 'Are you sure?' }}"
                                     @endif
                                     class="{{ $action['class'] }}"
                                 >
