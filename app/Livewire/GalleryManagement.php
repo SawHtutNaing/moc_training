@@ -3,11 +3,11 @@
 namespace App\Livewire;
 
 use App\Models\Gallery;
-use App\Models\Batch;
+use App\Models\Batch;            
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Validate;
-use Livewire\Attributes\On;
+use Livewire\Attributes\On; 
 
 class GalleryManagement extends Component
 {
@@ -18,6 +18,10 @@ class GalleryManagement extends Component
     public $filteredGalleries=null;
     public $galleryId = null;
     public $showModal = false;
+    public $showbatch = false;
+    public $searchBatchId = '';
+
+   
 
 
     #[Validate('required|image|max:2048')]
@@ -38,8 +42,19 @@ class GalleryManagement extends Component
     public function loadGalleries()
     {
         $this->galleries = Gallery::with('batch')->get();
+        
   
     }
+    public function openbatch()
+    {
+        if ($this->searchBatchId !== '' && $this->batch_id==$this->searchBatchId) {
+            $this->showbatch = true;
+            $this->galleries = Gallery::where('batch_id', $this->searchBatchId)->with('batch')->get();
+        } else {
+            $this->loadGalleries();
+        }
+    }
+    
 
     public function openModal()
     {
@@ -106,9 +121,21 @@ class GalleryManagement extends Component
         $this->batch_id = '';
         $this->resetValidation();
     }
+    
 
+    public function loadMore(): void
+    {
+        $this->on_page += 5;
+    }
     public function render()
     {
+        $this->galleries = Gallery::with('batch')->get();
+        $query = Gallery::query();
+        if (!empty($this->searchBatchId)) {
+               $query->where('batch_id', $this->searchBatchId);
+               $this->galleries = Gallery::where('batch_id',$this->searchBatchId)->get();
+           }
+           
         return view('livewire.gallery-management');
     }
 }

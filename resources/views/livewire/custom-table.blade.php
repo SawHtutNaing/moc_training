@@ -1,18 +1,20 @@
 @props([
     'config' => [
         'columns' => [],
-        'data' => [],
         'actions' => [],
         'emptyMessage' => 'No records found.',
+        'data',
     ]
-])
+])  
 
 <div class="bg-light shadow-md rounded-md p-6">
     <table class="w-full table-auto border-collapse">
         <thead>
             <tr class="bg-gray-100">
                 @foreach ($config['columns'] as $column)
-                    <th class="px-4 py-2 text-left text-dark border border-gray-200">{{ $column['label'] }}</th>
+                    <th class="px-4 py-2 text-left text-dark border border-gray-200">
+                        {{ $column['label'] }}
+                    </th>
                 @endforeach
                 @if (!empty($config['actions']))
                     <th class="px-4 py-2 text-left text-dark border border-gray-200">Actions</th>
@@ -20,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($config['data'] as $row)
+            @forelse ($data as $row)
                 <tr class="border-b border-gray-200">
                     @foreach ($config['columns'] as $column)
                         <td class="px-4 py-2 text-dark border border-gray-200">
@@ -53,4 +55,6 @@
             @endforelse
         </tbody>
     </table>
+
+
 </div>

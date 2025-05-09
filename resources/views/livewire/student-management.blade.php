@@ -86,7 +86,7 @@
             'columns' => [
                 ['label' => 'Name', 'key' => 'name'],
                 ['label' => 'Date of Birth', 'key' => 'dob'],
-                ['label' => 'Gender', 'key' => 'gender'],
+                ['label' => 'Gender', 'key' => 'gender_label'],
                 ['label' => 'NRC', 'key' => 'nrc'],
                 ['label' => 'Phone', 'key' => 'phone'],
                 ['label' => 'Email', 'key' => 'email'],

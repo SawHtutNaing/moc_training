@@ -9,9 +9,10 @@ use Livewire\Attributes\On;
 
 class StudentManagement extends Component
 {
-    public $students;
+    // public $students;
     public $studentId = null;
     public $showModal = false;
+    
 
     #[Validate('required|string|max:255')]
     public $name = '';
@@ -20,7 +21,7 @@ class StudentManagement extends Component
     public $dob = '';
 
     #[Validate('required|in:1,2,3')]
-    public $gender = '';
+  public $gender = '';
 
     #[Validate('required|string|max:50')]
     public $nrc = '';
@@ -41,7 +42,7 @@ class StudentManagement extends Component
 
     public function loadStudents()
     {
-        $this->students = Student::all();
+        // $this->students = Student::paginate(10);
     }
 
     public function openModal()
@@ -121,6 +122,10 @@ class StudentManagement extends Component
 
     public function render()
     {
-        return view('livewire.student-management');
-    }
+        $students = Student::paginate(10);
+        ;
+        return view('livewire.student-management' , compact('students'));   
 }
+
+} 
+
