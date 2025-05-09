@@ -23,7 +23,7 @@ class StudentManagement extends Component
     public $dob = '';
 
     #[Validate('required|in:1,2,3')]
-    public $gender = '';
+  public $gender = '';
 
     #[Validate('required|string|max:50')]
     public $nrc = '';
@@ -123,3 +123,6 @@ class StudentManagement extends Component
         return view('livewire.student-management', compact('students', 'data'));
     }
 }
+
+
+

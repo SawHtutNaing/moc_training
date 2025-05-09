@@ -12,4 +12,15 @@ class Student extends Model
     {
         return $this->hasMany(Enroll::class);
     }
+    // In Student model
+public function getGenderLabelAttribute()
+{
+    return match($this->gender) {
+        1 => 'Male',
+        2 => 'Female',
+        3 => 'Other',
+        default => 'Unknown',
+    };
+}
+
 }

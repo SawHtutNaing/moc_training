@@ -1,5 +1,5 @@
 @props([])
-@dd('')
+
 
 <div class="container mx-auto p-4">
     <h1 class="text-2xl mb-6 font-bold text-primary">Gallery Management</h1>
@@ -68,6 +68,19 @@
         </div>
     </div>
 
+
+
+  <!-- Dropdown menu -->
+ 
+
+<select name="batch" id="batch" wire:model.live="searchBatchId">
+    @foreach($batches as $batch)
+        <option value="{{ $batch->id }}">{{ $batch->name }}</option>
+    @endforeach
+   
+</select>
+
+
     <!-- Gallery Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         @forelse ($galleries as $gallery)
@@ -78,10 +91,7 @@
 
                 <!-- Hover Details -->
                 <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-70 transition-opacity duration-300 flex flex-col justify-between p-4">
-                    <!-- <div>
-                        <p class="text-gray-100 font-semibold">{{ $gallery->description }}</p>
-                        <p class="text-sm text-gray-300">Batch: {{ $gallery->batch->name ?? 'N/A' }}</p>
-                    </div> -->
+                    
                     <div class="mt-2 flex justify-content-end justify-end gap-2">
                         <button wire:click="edit({{$gallery->id}})"
                             class="bg-green-500 text-light px-3 py-1 rounded-md hover:bg-black transition-colors">
@@ -100,11 +110,18 @@
                             </svg>
                         </button>
                     </div>
+
+                    <div class="mt-2 flex flex-col items-center justify-center">
+                        
+                    <p class="text-gray-100 font-semibold">{{ $gallery->description }}</p>
+                        <p class="text-sm text-gray-300">Batch: {{ $gallery->batch->name ?? 'N/A' }}</p>
+                    </div>
                 </div>
             </div>
         @empty
             <p class="text-gray-500 col-span-full">No gallery images found.</p>
-            @endempty
+
         @endforelse
     </div>
+
 </div>
