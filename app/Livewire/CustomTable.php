@@ -8,7 +8,7 @@ class CustomTable extends Component
 {
     public $config = [
         'columns' => [],
-        'data' => [],
+        'data' => null, // Expects a LengthAwarePaginator or Collection
         'actions' => [],
         'emptyMessage' => 'No records found.',
     ];

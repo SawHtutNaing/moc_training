@@ -4,14 +4,17 @@ namespace App\Livewire;
 
 use App\Models\Student;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\On;
 
 class StudentManagement extends Component
 {
-    public $students;
+    use WithPagination;
+
     public $studentId = null;
     public $showModal = false;
+    public $refreshKey = 0; // Used to force UI refresh
 
     #[Validate('required|string|max:255')]
     public $name = '';
@@ -33,16 +36,6 @@ class StudentManagement extends Component
 
     #[Validate('required|string|max:500')]
     public $address = '';
-
-    public function mount()
-    {
-        $this->loadStudents();
-    }
-
-    public function loadStudents()
-    {
-        $this->students = Student::all();
-    }
 
     public function openModal()
     {
@@ -68,9 +61,10 @@ class StudentManagement extends Component
             'email' => $this->email,
             'address' => $this->address,
         ];
-
+        $msg = $this->studentId ? 'Student updated successfully!' : 'Student created successfully!';
         if ($this->studentId) {
             // Update existing student
+
             $student = Student::findOrFail($this->studentId);
             $student->update($data);
         } else {
@@ -79,8 +73,10 @@ class StudentManagement extends Component
         }
 
         $this->closeModal();
-        $this->loadStudents();
-        $this->dispatch('notify', message: $this->studentId ? 'Student updated successfully!' : 'Student created successfully!');
+        $this->resetPage(); // Reset to first page after save
+        $this->refreshKey = rand(1000, 9999); // Force UI refresh
+
+        $this->dispatch('notify', message: $msg);
     }
 
     #[On('edit-student')]
@@ -102,7 +98,8 @@ class StudentManagement extends Component
     public function delete($id)
     {
         Student::findOrFail($id)->delete();
-        $this->loadStudents();
+        $this->resetPage(); // Reset to first page after delete
+        $this->refreshKey = rand(1000, 9999); // Force UI refresh
         $this->dispatch('notify', message: 'Student deleted successfully!');
     }
 
@@ -121,6 +118,8 @@ class StudentManagement extends Component
 
     public function render()
     {
-        return view('livewire.student-management');
+        $students = Student::paginate(10);
+        $data = $students->items();
+        return view('livewire.student-management', compact('students', 'data'));
     }
 }

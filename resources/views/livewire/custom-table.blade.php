@@ -1,7 +1,7 @@
 @props([
     'config' => [
         'columns' => [],
-        'data' => [],
+        'data' => null,
         'actions' => [],
         'emptyMessage' => 'No records found.',
     ]
