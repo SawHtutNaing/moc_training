@@ -81,7 +81,7 @@
     </div>
 
     <!-- Students Table -->
-    <livewire:custom-table wire:key="students-{{ $students->count() }}-{{ $students->pluck('id')->join('-') }}"
+    <livewire:custom-table wire:key="students-{{ $students->currentPage() }}-{{ $students->total() }}-{{ $refreshKey }}"
         :config="[
             'columns' => [
                 ['label' => 'Name', 'key' => 'name'],
@@ -92,7 +92,7 @@
                 ['label' => 'Email', 'key' => 'email'],
                 ['label' => 'Address', 'key' => 'address'],
             ],
-            'data' => $students,
+            'data' => $data,
             'actions' => [
                 [
                     'label' => 'Edit',
@@ -109,4 +109,11 @@
             ],
             'emptyMessage' => 'No students found.'
         ]" />
+
+    <!-- Pagination Links -->
+    @if ($students instanceof \Illuminate\Pagination\LengthAwarePaginator)
+        <div class="mt-4">
+            {{ $students->links('components.pagination-links') }}
+        </div>
+    @endif
 </div>
