@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+
+
 use App\Livewire\BatchDetailsManagement;
 use App\Livewire\BatchManagement;
 use App\Livewire\CourseManagement;
@@ -11,7 +14,7 @@ use App\Livewire\Student\StudentEdit;
 use App\Livewire\StudentManagement;
 use App\Livewire\TeacherManagement;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
+
 use Livewire\Volt\Volt;
 
 Route::get('/', function () {
@@ -20,15 +23,9 @@ Route::get('/', function () {
 
 
 
-//   Route::get('/dashboard', [DashboardController::class, 'index'])
-//  ->middleware(['auth', 'verified']) 
-// ->name('dashboard');
-
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+  Route::get('/dashboard', [DashboardController::class, 'index'])
+ ->middleware(['auth'])
+->name('dashboard');
 
 
 

@@ -7,35 +7,37 @@
     ]
 ])
 
-<div class="bg-light shadow-md rounded-md p-6">
-    <table class="w-full table-auto border-collapse">
+<div class="bg-light shadow-md rounded-md p-6 overflow-x-auto">
+    <table class="w-full table-auto border-collapse min-w-max">
         <thead>
             <tr class="bg-gray-100">
                 @foreach ($config['columns'] as $column)
-                    <th class="px-4 py-2 text-left text-dark border border-gray-200">{{ $column['label'] }}</th>
+                    <th class="px-4 py-2 text-left text-dark border border-gray-200 whitespace-nowrap">
+                        {{ $column['label'] }}
+                    </th>
                 @endforeach
                 @if (!empty($config['actions']))
-                    <th class="px-4 py-2 text-left text-dark border border-gray-200">Actions</th>
+                    <th class="px-4 py-2 text-left text-dark border border-gray-200 whitespace-nowrap">Actions</th>
                 @endif
             </tr>
         </thead>
         <tbody>
             @forelse ($config['data'] as $row)
-                <tr class="border-b border-gray-200">
+                <tr class="border-b border-gray-200 hover:bg-gray-50">
                     @foreach ($config['columns'] as $column)
-                        <td class="px-4 py-2 text-dark border border-gray-200">
+                        <td class="px-4 py-2 text-dark border border-gray-200 text-right whitespace-nowrap">
                             {{ data_get($row, $column['key']) }}
                         </td>
                     @endforeach
                     @if (!empty($config['actions']))
-                        <td class="px-4 py-2 flex gap-2 border border-gray-200">
+                        <td class="px-4 py-2 flex gap-2 justify-end border border-gray-200 whitespace-nowrap">
                             @foreach ($config['actions'] as $action)
                                 <button
                                     wire:click="triggerAction('{{ $action['event'] }}', {{ $row->id }})"
                                     @if (isset($action['confirm']) && $action['confirm'])
                                         onclick="return confirm('{{ $action['confirmMessage'] ?? 'Are you sure?' }}')"
                                     @endif
-                                    class="{{ $action['class'] }}"
+                                    class="{{ $action['class'] }} px-3 py-1 rounded-md text-sm"
                                 >
                                     {{ $action['label'] }}
                                 </button>
@@ -54,3 +56,4 @@
         </tbody>
     </table>
 </div>
+
