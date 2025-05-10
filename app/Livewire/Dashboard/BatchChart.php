@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Dashboard;
-
+namespace App\Livewire\Dashboard;
 use App\Models\Batch;
 use Livewire\Component;
 
@@ -12,19 +11,20 @@ class BatchChart extends Component
 
     public function mount()
     {
-        $batches = Batch::withCount('students')
-            ->orderBy('students_count', 'desc')
+        
+        $batches = Batch::withCount('enrollments')
+            ->orderBy('enrollments_count', 'desc')
             ->take(5)
             ->get();
 
         $this->labels = $batches->pluck('name')->toArray();
         $this->dataset = [
             [
-                'label' => 'Students',
+                'label' => 'Enrollments',
                 'backgroundColor' => 'rgba(54, 162, 235, 0.5)',
                 'borderColor' => 'rgba(54, 162, 235, 1)',
                 'borderWidth' => 1,
-                'data' => $batches->pluck('students_count')->toArray(),
+                'data' => $batches->pluck('enrollments_count')->toArray(),
             ],
         ];
     }

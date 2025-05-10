@@ -43,7 +43,7 @@
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Number of Students'
+                            text: 'Number of Enrolled Students'
                         }
                     }
                 }
