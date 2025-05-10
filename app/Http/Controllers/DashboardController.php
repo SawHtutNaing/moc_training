@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Teacher;
-use App\Models\Student;
 use App\Models\Batch;
 use App\Models\Course;
+use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\User;
+
+
+
 
 class DashboardController extends Controller
 {

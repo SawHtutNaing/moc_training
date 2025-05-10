@@ -11,8 +11,9 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="ml-4">
+
                         <h2 class="text-lg font-semibold">Users</h2>
-                        <div x-data="animatedCounter(200)" class="text-2xl font-bold">
+                        <div x-data="animatedCounter({{ $totalUsers }})" class="text-2xl font-bold">
                             <span x-text="count"></span>
                         </div>
                     </div>
@@ -27,7 +28,7 @@
                     </div>
                     <div class="ml-4">
                         <h2 class="text-lg font-semibold">Teachers</h2>
-                        <div x-data="animatedCounter(200)" class="text-2xl font-bold">
+                        <div x-data="animatedCounter({{ $totalTeachers }})" class="text-2xl font-bold">
                             <span x-text="count"></span>
                         </div>
                     </div>
@@ -42,7 +43,7 @@
                     </div>
                     <div class="ml-4">
                         <h2 class="text-lg font-semibold">Students</h2>
-                        <div x-data="animatedCounter(120)" class="text-2xl font-bold">
+                        <div x-data="animatedCounter({{ $totalStudents }})" class="text-2xl font-bold">
                             <span x-text="count"></span>
                         </div>
                     </div>
@@ -57,7 +58,7 @@
                     </div>
                     <div class="ml-4">
                         <h2 class="text-lg font-semibold">Batches</h2>
-                        <div x-data="animatedCounter(100)" class="text-2xl font-bold">
+                        <div x-data="animatedCounter({{ $totalBatches }})" class="text-2xl font-bold">
                             <span x-text="count">55</span>
                         </div>
                     </div>
@@ -72,7 +73,7 @@
                     </div>
                     <div class="ml-4">
                         <h2 class="text-lg font-semibold">Courses</h2>
-                        <div x-data="animatedCounter(77)" class="text-2xl font-bold">
+                        <div x-data="animatedCounter({{ $totalCourses }})" class="text-2xl font-bold">
                             <span x-text="count">77</span>
                         </div>
                     </div>
@@ -87,7 +88,7 @@
             return {
                 count: 0,
                 init() {
-                    const interval = 50; // Animation speed
+                    const interval = 200; // Animation speed
                     const increment = Math.ceil(target / 100); // Increment step
                     const timer = setInterval(() => {
                         if (this.count < target) {
