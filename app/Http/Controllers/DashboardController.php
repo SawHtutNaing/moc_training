@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enroll;
+use App\Models\User;
 use App\Models\Batch;
 use App\Models\Course;
 use App\Models\Student;
 use App\Models\Teacher;
-use App\Models\User;
 
 
 
@@ -20,7 +21,8 @@ class DashboardController extends Controller
         $totalTeachers = Teacher::count();
         $totalBatches = Batch::count();
         $totalCourses = Course::count();
+        $totalEnrollments = Enroll::count();
 
-        return view('dashboard', compact('totalUsers', 'totalStudents', 'totalTeachers', 'totalBatches', 'totalCourses'));
+        return view('dashboard', compact('totalUsers', 'totalStudents', 'totalTeachers', 'totalBatches', 'totalCourses','totalEnrollments'));
     }
 }

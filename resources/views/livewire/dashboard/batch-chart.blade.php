@@ -1,3 +1,11 @@
+@once
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @endpush
+@endonce
+
+@push('scripts')
+
 <div class="bg-white shadow-md rounded-md p-6 mt-6">
     <h2 class="text-xl font-bold mb-4 text-gray-800">Most Attended Batches</h2>
 
@@ -5,13 +13,6 @@
         <canvas id="batchChart" height="100"></canvas>
     </div>
 </div>
-
-@once
-
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-@endonce
-
 
 <script>
     document.addEventListener('livewire:init', function () {
@@ -56,4 +57,8 @@
         });
     });
 </script>
-    
+
+
+
+
+   
