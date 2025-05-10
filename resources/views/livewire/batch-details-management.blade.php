@@ -82,7 +82,7 @@
                 ['label' => 'Lecture Date', 'key' => 'lecture_date'],
                 ['label' => 'Lecture Title', 'key' => 'lecture_title'],
             ],
-            'data' => $batchdetails,
+            'data' => $batchdetails->items(),
             'actions' => [
                 [
                     'label' => 'Edit',
@@ -98,5 +98,10 @@
                 ],
             ],
             'emptyMessage' => 'No batches found.'
-        ]" />
+        ]" />@if ($batchdetails instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    <div class="mt-4">
+        {{ $batchdetails->links('components.pagination-links') }}
+    </div>
+@endif
+
 </div>

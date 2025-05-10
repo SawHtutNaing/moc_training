@@ -20,7 +20,7 @@ class GalleryManagement extends Component
     public $showModal = false;
     public $showbatch = false;
     public $searchBatchId = '';
-
+  public int $on_page = 5;
    
 
 
@@ -125,7 +125,7 @@ class GalleryManagement extends Component
 
     public function loadMore(): void
     {
-        $this->on_page += 5;
+        $this->on_page += 6;
     }
     public function render()
     {

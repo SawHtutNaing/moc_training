@@ -51,7 +51,7 @@
             'columns' => [
                 ['label' => 'Name', 'key' => 'name'],
             ],
-            'data' => $courses,
+             'data' => $data, 
             'actions' => [
                 [
                     'label' => 'Edit',
@@ -68,4 +68,10 @@
             ],
             'emptyMessage' => 'No courses found.'
         ]" />
+        @if ($courses instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    <div class="mt-4">
+        {{ $courses->links('components.pagination-links') }}
+    </div>
+@endif
+
 </div>

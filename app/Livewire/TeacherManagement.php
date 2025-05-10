@@ -3,15 +3,19 @@
 namespace App\Livewire;
 
 use App\Models\Teacher;
+use Livewire\WithPagination;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\On;
 
 class TeacherManagement extends Component
 {
-    public $teachers;
+    use WithPagination;
+  
+
     public $teacherId = null;
     public $showModal = false;
+    public $refreshKey = 0; // Used to force UI refresh
 
     #[Validate('required|string|max:255')]
     public $name = '';
@@ -40,15 +44,6 @@ class TeacherManagement extends Component
     #[Validate('required|string|max:500')]
     public $address = '';
 
-    public function mount()
-    {
-        $this->loadTeachers();
-    }
-
-    public function loadTeachers()
-    {
-        $this->teachers = Teacher::all();
-    }
 
     public function openModal()
     {
@@ -65,20 +60,23 @@ class TeacherManagement extends Component
     {
         $this->validate();
 
-        $data = [
-            'name' => $this->name,
-            'position' => $this->position,
-            'organization' => $this->organization,
-            'dob' => $this->dob,
-            'gender' => $this->gender,
-            'nrc' => $this->nrc,
-            'phone' => $this->phone,
-            'email' => $this->email,
-            'address' => $this->address,
-        ];
-
+        
+            $data = [
+                'name' => $this->name,
+                'position' => $this->position,
+                'organization' => $this->organization,
+                'dob' => $this->dob,
+                'gender' => $this->gender,
+                'nrc' => $this->nrc,
+                'phone' => $this->phone,
+                'email' => $this->email,
+                'address' => $this->address,
+            ];
+    
+        $msg = $this->teacherId ? 'Teacher updated successfully!' : 'Teacher created successfully!';
         if ($this->teacherId) {
             // Update existing teacher
+
             $teacher = Teacher::findOrFail($this->teacherId);
             $teacher->update($data);
         } else {
@@ -87,8 +85,10 @@ class TeacherManagement extends Component
         }
 
         $this->closeModal();
-        $this->loadTeachers();
-        $this->dispatch('notify', message: $this->teacherId ? 'Teacher updated successfully!' : 'Teacher created successfully!');
+        $this->resetPage(); // Reset to first page after save
+        $this->refreshKey = rand(1000, 9999); // Force UI refresh
+
+        $this->dispatch('notify', message: $msg);
     }
 
     #[On('edit-teacher')]
@@ -112,13 +112,13 @@ class TeacherManagement extends Component
     public function delete($id)
     {
         Teacher::findOrFail($id)->delete();
-        $this->loadTeachers();
+        $this->resetPage(); // Reset to first page after delete
+        $this->refreshKey = rand(1000, 9999); // Force UI refresh
         $this->dispatch('notify', message: 'Teacher deleted successfully!');
     }
 
     public function resetForm()
     {
-        $this->teacherId = null;
         $this->name = '';
         $this->position = '';
         $this->organization = '';
@@ -133,6 +133,11 @@ class TeacherManagement extends Component
 
     public function render()
     {
-        return view('livewire.teacher-management');
+        $teachers = Teacher::paginate(5);
+        $data = $teachers->items();
+        return view('livewire.teacher-management', compact('teachers', 'data'));
     }
 }
+
+
+

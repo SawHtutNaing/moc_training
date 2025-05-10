@@ -75,32 +75,37 @@
         </div>
     </div>
 
-    <!-- Batches Table -->
     <livewire:custom-table wire:key="batches-{{ $batches->count() }}-{{ $batches->pluck('id')->join('-') }}"
-        :config="[
-            'columns' => [
-                ['label' => 'Name', 'key' => 'name'],
-                ['label' => 'Course', 'key' => 'course.name'],
-                ['label' => 'Timetable', 'key' => 'timetable'],
-                ['label' => 'Start Date', 'key' => 'start_date'],
-                ['label' => 'End Date', 'key' => 'end_date'],
-                ['label' => 'Fees', 'key' => 'fees'],
+    :config="[
+        'columns' => [
+            ['label' => 'Name', 'key' => 'name'],
+            ['label' => 'Course', 'key' => 'course.name'],
+            ['label' => 'Timetable', 'key' => 'timetable'],
+            ['label' => 'Start Date', 'key' => 'start_date'],
+            ['label' => 'End Date', 'key' => 'end_date'],
+            ['label' => 'Fees', 'key' => 'fees'],
+        ],
+        'data' => $batches->items(), 
+        'actions' => [
+            [
+                'label' => 'Edit',
+                'event' => 'edit-batch',
+                'class' => 'bg-info text-light px-3 py-1 rounded-md hover:bg-primary transition-colors',
             ],
-            'data' => $batches,
-            'actions' => [
-                [
-                    'label' => 'Edit',
-                    'event' => 'edit-batch',
-                    'class' => 'bg-info text-light px-3 py-1 rounded-md hover:bg-primary transition-colors',
-                ],
-                [
-                    'label' => 'Delete',
-                    'event' => 'delete-batch',
-                    'class' => 'bg-red-500 text-light px-3 py-1 rounded-md hover:bg-red-600 transition-colors',
-                    'confirm' => true,
-                    'confirmMessage' => 'Are you sure you want to delete this batch?'
-                ],
+            [
+                'label' => 'Delete',
+                'event' => 'delete-batch',
+                'class' => 'bg-red-500 text-light px-3 py-1 rounded-md hover:bg-red-600 transition-colors',
+                'confirm' => true,
+                'confirmMessage' => 'Are you sure you want to delete this batch?'
             ],
-            'emptyMessage' => 'No batches found.'
-        ]" />
+        ],
+        'emptyMessage' => 'No batches found.'
+    ]" />
+    @if ($batches instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    <div class="mt-4">
+        {{ $batches->links('components.pagination-links') }}
+    </div>
+@endif
+
 </div>

@@ -73,7 +73,7 @@
                 ['label' => 'Student', 'key' => 'student.name'],
                 ['label' => 'Enrollment Date', 'key' => 'enroll_date'],
             ],
-            'data' => $enrollments,
+            'data' => $enrollments->items(), 
             'actions' => [
                 [
                     'label' => 'Edit',
@@ -90,4 +90,10 @@
             ],
             'emptyMessage' => 'No enrollments found.'
         ]" />
+@if ($enrollments instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    <div class="mt-4">
+        {{ $enrollments->links('components.pagination-links') }}
+    </div>
+@endif
+
 </div>

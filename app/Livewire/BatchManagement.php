@@ -4,13 +4,15 @@ namespace App\Livewire;
 
 use App\Models\Batch;
 use App\Models\Course;
+use Livewire\WithPagination;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\On;
 
 class BatchManagement extends Component
 {
-    public $batches;
+    use WithPagination;
+
     public $courses;
     public $batchId = null;
     public $showModal = false;
@@ -35,13 +37,12 @@ class BatchManagement extends Component
 
     public function mount()
     {
-        $this->loadBatches();
         $this->courses = Course::all(['id', 'name']);
     }
 
-    public function loadBatches()
+    public function updating()
     {
-        $this->batches = Batch::with('course')->get();
+        $this->resetPage(); // Reset pagination when updated
     }
 
     public function openModal()
@@ -69,16 +70,12 @@ class BatchManagement extends Component
         ];
 
         if ($this->batchId) {
-            // Update existing batch
-            $batch = Batch::findOrFail($this->batchId);
-            $batch->update($data);
+            Batch::findOrFail($this->batchId)->update($data);
         } else {
-            // Create new batch
             Batch::create($data);
         }
 
         $this->closeModal();
-        $this->loadBatches();
         $this->dispatch('notify', message: $this->batchId ? 'Batch updated successfully!' : 'Batch created successfully!');
     }
 
@@ -100,7 +97,6 @@ class BatchManagement extends Component
     public function delete($id)
     {
         Batch::findOrFail($id)->delete();
-        $this->loadBatches();
         $this->dispatch('notify', message: 'Batch deleted successfully!');
     }
 
@@ -118,6 +114,9 @@ class BatchManagement extends Component
 
     public function render()
     {
-        return view('livewire.batch-management');
+        return view('livewire.batch-management', [
+            'batches' => Batch::with('course')->paginate(5),
+        ]);
     }
+    
 }

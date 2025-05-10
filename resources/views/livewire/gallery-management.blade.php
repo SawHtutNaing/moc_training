@@ -123,5 +123,12 @@
 
         @endforelse
     </div>
-
+<!-- Load More Button -->
+@if($this->galleries->count() >= $on_page)
+    <div class="mt-6 text-center">
+        <button wire:click="loadMore" class="px-4 py-2 bg-primary text-light rounded hover:bg-info transition">
+            Load More
+        </button>
+    </div>
+@endif
 </div>

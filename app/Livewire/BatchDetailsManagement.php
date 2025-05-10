@@ -8,10 +8,12 @@ use App\Models\Teacher;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class BatchDetailsManagement extends Component
 {
-    public $batchdetails;
+    use WithPagination;
+
     public $batches;
     public $teachers;
     public $lecturetitle;
@@ -32,16 +34,15 @@ class BatchDetailsManagement extends Component
 
     public function mount()
     {
-        $this->loadBatchdetails();
         $this->batches = Batch::all(['id', 'name']);
         $this->teachers = Teacher::all(['id', 'name']);
-
     }
 
-    public function loadBatchdetails()
+    public function updating($name)
     {
-        $this->batchdetails = BatchDetail::with('batch','teacher')->get();
-
+        if (in_array($name, ['batch_id', 'teacher_id', 'lecture_date', 'lecture_title'])) {
+            $this->resetPage();
+        }
     }
 
     public function openModal()
@@ -65,19 +66,16 @@ class BatchDetailsManagement extends Component
             'lecture_date' => $this->lecture_date,
             'lecture_title' => $this->lecture_title,
         ];
-           
 
         if ($this->batchdetailsId) {
-            // Update existing batch
             $batchdetails = BatchDetail::findOrFail($this->batchdetailsId);
             $batchdetails->update($data);
         } else {
-            // Create new batch
             BatchDetail::create($data);
         }
 
         $this->closeModal();
-        $this->loadBatchdetails();
+        $this->resetPage();
         $this->dispatch('notify', message: $this->batchdetailsId ? 'Batch updated successfully!' : 'Batch created successfully!');
     }
 
@@ -97,7 +95,7 @@ class BatchDetailsManagement extends Component
     public function delete($id)
     {
         BatchDetail::findOrFail($id)->delete();
-        $this->loadBatchdetails();
+        $this->resetPage();
         $this->dispatch('notify', message: 'Batch deleted successfully!');
     }
 
@@ -113,6 +111,8 @@ class BatchDetailsManagement extends Component
 
     public function render()
     {
-        return view('livewire.batch-details-management');
+        return view('livewire.batch-details-management', [
+            'batchdetails' => BatchDetail::with('batch', 'teacher')->latest()->paginate(5)
+        ]);
     }
 }

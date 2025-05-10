@@ -11,15 +11,25 @@ use App\Livewire\Student\StudentEdit;
 use App\Livewire\StudentManagement;
 use App\Livewire\TeacherManagement;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use Livewire\Volt\Volt;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+
+
+//   Route::get('/dashboard', [DashboardController::class, 'index'])
+//  ->middleware(['auth', 'verified']) 
+// ->name('dashboard');
+
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

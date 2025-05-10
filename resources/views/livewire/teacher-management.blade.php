@@ -95,12 +95,15 @@
         :config="[
             'columns' => [
                 ['label' => 'Name', 'key' => 'name'],
+                 ['label' => 'DOB', 'key' => 'dob'],
+                ['label' => 'Gender', 'key' => 'gender'],
+                ['label' => 'NRC', 'key' => 'nrc'],
                 ['label' => 'Position', 'key' => 'position'],
                 ['label' => 'Organization', 'key' => 'organization'],
                 ['label' => 'Email', 'key' => 'email'],
                 ['label' => 'Phone', 'key' => 'phone'],
             ],
-            'data' => $teachers,
+            'data' => $data,
             'actions' => [
                 [
                     'label' => 'Edit',
@@ -117,4 +120,11 @@
             ],
             'emptyMessage' => 'No teachers found.'
         ]" />
+         <!-- Pagination Links -->
+    @if ($teachers instanceof \Illuminate\Pagination\LengthAwarePaginator)
+        <div class="mt-4">
+            {{ $teachers->links('components.pagination-links') }}
+        </div>
+        
+    @endif
 </div>
