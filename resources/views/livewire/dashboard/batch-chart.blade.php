@@ -7,14 +7,14 @@
 </div>
 
 @once
-    @push('scripts')
+
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    @endpush
+
 @endonce
 
-@push('scripts')
+
 <script>
-    document.addEventListener('livewire:load', function () {
+    document.addEventListener('livewire:init', function () {
         const ctx = document.getElementById('batchChart');
         if (!ctx) return;
 
@@ -56,4 +56,4 @@
         });
     });
 </script>
-@endpush
+    
