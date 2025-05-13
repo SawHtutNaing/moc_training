@@ -2,12 +2,19 @@
 
 namespace App\Livewire\Dashboard;
 use App\Models\Batch;
+use App\Models\Course;
+use App\Models\Student;
+use App\Models\Teacher;
 use Livewire\Component;
 
 class BatchChart extends Component
 {
     public array $labels = [];
     public array $dataset = [];
+    public array $teacherLabels = [];
+    public array $teacherData = [];
+    public array $studentLabels = [];
+    public array $studentData = [];
 
     public function mount()
     {
@@ -27,6 +34,18 @@ class BatchChart extends Component
                 'data' => $batches->pluck('enrollments_count')->toArray(),
             ],
         ];
+
+        //Teachers
+        $teachers = Teacher::all();
+        $this->teacherLabels = $teachers->pluck('name')->toArray();
+        $this->teacherData = $teachers->pluck('teachers_count')->toArray();
+
+        // Students
+        $students = Student::all();
+        $this->studentLabels = $students->pluck('batch.name')->toArray();
+        $this->studentData = $students->pluck('enrollments_count')->toArray();
+
+       
     }
 
     public function render()

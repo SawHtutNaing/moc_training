@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-
-
+use App\Http\Controllers\StudentController;
 use App\Livewire\BatchDetailsManagement;
 use App\Livewire\BatchManagement;
 use App\Livewire\CourseManagement;
@@ -13,7 +12,14 @@ use App\Livewire\Student\StudentCreate;
 use App\Livewire\Student\StudentEdit;
 use App\Livewire\StudentManagement;
 use App\Livewire\TeacherManagement;
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StudentFrontController;
+use App\Http\Controllers\TeacherFrontController;
+
+Route::get('/studentfront', [StudentFrontController::class, 'index'])->name('studentfront');
+Route::get('/teacherfront', [TeacherFrontController::class, 'index'])->name('teacherfront');
+
 
 use Livewire\Volt\Volt;
 
@@ -43,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/course",CourseManagement::class)->name("course");
     Route::get("/enroll",EnrollManagement::class)->name("enroll");
     Route::get("/gallery",GalleryManagement::class)->name("gallery");
+
+
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');

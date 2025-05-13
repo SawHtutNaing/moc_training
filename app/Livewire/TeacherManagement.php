@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Livewire;
-
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Models\Teacher;
 use Livewire\WithPagination;
 use Livewire\Component;
@@ -130,6 +130,36 @@ class TeacherManagement extends Component
         $this->address = '';
         $this->resetValidation();
     }
+
+
+public function export(): StreamedResponse
+{
+    $filename = 'teachers_' . now()->format('Y-m-d_H-i-s') . '.csv';
+
+    return response()->streamDownload(function () {
+        $handle = fopen('php://output', 'w');
+        // CSV headers
+        fputcsv($handle, ['ID', 'Name', 'Position', 'Organization', 'DOB', 'Gender', 'NRC', 'Phone', 'Email', 'Address']);
+
+        // Data rows
+        Teacher::cursor()->each(function ($teacher) use ($handle) {
+            fputcsv($handle, [
+                $teacher->id,
+                $teacher->name,
+                $teacher->position,
+                $teacher->organization,
+                $teacher->dob,
+                $teacher->gender,
+                $teacher->nrc,
+                $teacher->phone,
+                $teacher->email,
+                $teacher->address,
+            ]);
+        });
+
+        fclose($handle);
+    }, $filename);
+}
 
     public function render()
     {

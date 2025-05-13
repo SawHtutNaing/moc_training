@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Livewire;
+use Symfony\Component\HttpFoundation\StreamedResponse; // Make sure this is at the top with your other use statements
 
 use App\Models\Batch;
 use App\Models\Course;
@@ -112,6 +113,42 @@ class BatchManagement extends Component
         $this->resetValidation();
     }
 
+public function export(): StreamedResponse
+{
+    $filename = 'batches_' . now()->format('Y-m-d_H-i-s') . '.csv';
+
+    return response()->streamDownload(function () {
+        $handle = fopen('php://output', 'w');
+
+        // Header row
+        fputcsv($handle, [
+            'ID',
+            'Name',
+            'Course',
+            'Timetable',
+            'Start Date',
+            'End Date',
+            'Fees',
+        ]);
+
+        // Batch rows
+        Batch::with('course')->cursor()->each(function ($batch) use ($handle) {
+            fputcsv($handle, [
+                $batch->id,
+                $batch->name,
+                optional($batch->course)->name,
+                $batch->timetable,
+                $batch->start_date,
+                $batch->end_date,
+                $batch->fees,
+            ]);
+        });
+
+        fclose($handle);
+    }, $filename);
+}
+
+    
     public function render()
     {
         return view('livewire.batch-management', [

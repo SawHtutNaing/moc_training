@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Livewire;
-
 use Livewire\Component;
+use Symfony\Component\HttpFoundation\StreamedResponse; // Make sure this is at the top with your other use statements
+
 use Livewire\WithPagination;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\On;
@@ -68,6 +69,31 @@ class CourseManagement extends Component
         $this->name = '';
         $this->resetValidation();
     }
+public function export(): StreamedResponse
+{
+    $filename = 'courses_' . now()->format('Y-m-d_H-i-s') . '.csv';
+
+    return response()->streamDownload(function () {
+        $handle = fopen('php://output', 'w');
+
+        // Header row
+        fputcsv($handle, [
+            'ID',
+            'Name',
+        ]);
+
+        // Batch rows
+        Course::with('course')->cursor()->each(function ($course) use ($handle) {
+            fputcsv($handle, [
+                $course->id,
+                $course->name,
+              
+            ]);
+        });
+
+        fclose($handle);
+    }, $filename);
+}
 
     public function render()
     {

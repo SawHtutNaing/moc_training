@@ -16,11 +16,12 @@
     <style>
         .swiper {
             width: 100%;
-            height: 400px;
+            height: auto;
+            max-height: 400px;
         }
         .swiper-slide img {
             width: 100%;
-            height: 100%;
+            height: auto;
             object-fit: cover;
             border-radius: 10px;
         }
@@ -39,14 +40,27 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
         </button>
-        <nav class="hidden sm:flex space-x-6 text-sm font-medium">
-            <a href="{{ route('login') }}" class="text-black hover:text-blue-500">Login</a>
-            <a href="{{ route('register') }}" class="text-black hover:text-blue-500">Register</a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex space-x-6 text-sm font-medium">
+            <a href="{{ route('studentfront') }}" class="text-black hover:text-blue-500">Students</a>
+            <a href="#" class="text-black hover:text-blue-500">Teachers</a>
+            <a href="#" class="text-black hover:text-blue-500">Batches</a>
+            <a href="#" class="text-black hover:text-blue-500">Courses</a>
+            <a href="#" class="text-black hover:text-blue-500">Enrolls</a>
+            <a href="#" class="text-black hover:text-blue-500">Galleries</a>
         </nav>
     </div>
-    <div id="mobile-menu" class="sm:hidden hidden px-4 pb-4 space-y-2">
-        <a href="{{ route('login') }}" class="block text-black hover:text-blue-300">Login</a>
-        <a href="{{ route('register') }}" class="block text-black hover:text-blue-300">Register</a>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 space-y-2">
+        <a href="{{ route('studentfront') }}" class="text-black hover:text-blue-500">Students</a>
+        <a href="#" class="text-black hover:text-blue-500">Teachers</a>
+        <a href="#" class="text-black hover:text-blue-500">Batches</a>
+        <a href="#" class="text-black hover:text-blue-500">Courses</a>
+        <a href="#" class="text-black hover:text-blue-500">Enrolls</a>
+ 
+        <a href="#" class="text-black hover:text-blue-500">Galleries</a>
     </div>
 </header>
 
@@ -56,7 +70,8 @@
     <div class="relative z-10 text-center px-4 text-white">
         <h1 class="text-3xl md:text-6xl font-bold text-white">Welcome to the Ministry of Commerce</h1>
         <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto">Empowering businesses and fostering growth in Myanmar</p>
-        <a href="#" class="mt-6 inline-block px-8 py-3 bg-blue-500 hover:bg-white text-white hover:text-blue-500 rounded-md text-lg font-semibold transition">Get Started</a>
+        <a href="{{ route('login') }}" class="mt-6 inline-block px-8 py-3 bg-blue-500 hover:bg-white text-white hover:text-blue-500 rounded-md text-lg font-semibold transition">Login</a>
+        <a href="{{ route('register') }}" class="mt-6 inline-block px-8 py-3 bg-blue-500 hover:bg-white text-white hover:text-blue-500 rounded-md text-lg font-semibold transition">Register</a>
     </div>
 </section>
 
@@ -112,7 +127,7 @@
                 </form>
             </div>
             <div>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d244486.6915378337!2d95.86712028671872!3d16.771472999999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30c1ec7e4aae0865%3A0x160fdab219b4cbb3!2sMinistry%20of%20Commerce!5e0!3m2!1sen!2smm!4v1746610099208!5m2!1sen!2smm" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=..." width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </div>

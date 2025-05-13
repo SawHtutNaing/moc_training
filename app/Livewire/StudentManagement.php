@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Livewire;
-
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Models\Student;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -115,6 +115,46 @@ class StudentManagement extends Component
         $this->address = '';
         $this->resetValidation();
     }
+
+
+public function export(): StreamedResponse
+{
+    // 👇 customise the file name if you like
+    $filename = 'students_' . now()->format('Y-m-d_H-i-s') . '.csv';
+
+    return response()->streamDownload(function () {
+        $handle = fopen('php://output', 'w');
+
+        // ---- CSV header row --------------------------------------------------
+        fputcsv($handle, [
+            'ID',
+            'Name',
+            'Date of Birth',
+            'Gender',
+            'NRC',
+            'Phone',
+            'Email',
+            'Address',
+        ]);
+
+        // ---- Data rows -------------------------------------------------------
+        Student::cursor()->each(function (Student $student) use ($handle) {
+            fputcsv($handle, [
+                $student->id,
+                $student->name,
+                $student->dob,
+                // If you have getGenderLabelAttribute, you can use $student->gender_label
+                $student->gender,
+                $student->nrc,
+                $student->phone,
+                $student->email,
+                $student->address,
+            ]);
+        });
+
+        fclose($handle);
+    }, $filename);
+}
 
     public function render()
     {

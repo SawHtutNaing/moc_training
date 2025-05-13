@@ -18,6 +18,15 @@
         <button wire:click="openModal" class="bg-info text-light px-4 py-2 rounded-md hover:bg-primary transition-colors">
             Add Batch
         </button>
+        
+    <button
+        wire:click="export"
+        class="bg-success text-white px-4 py-2 rounded hover:bg-green-700 transition"
+    >
+        Export Batches
+    </button>
+
+
     </div>
 
     <!-- Modal -->

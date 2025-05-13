@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Livewire;
+use Symfony\Component\HttpFoundation\StreamedResponse; // Make sure this is at the top with your other use statements
 
 use App\Models\Batch;
 use App\Models\Enroll;
@@ -95,6 +96,35 @@ class EnrollManagement extends Component
         $this->enroll_date = '';
         $this->resetValidation();
     }
+    
+// public function export(): StreamedResponse
+// {
+//     $filename = 'enrolls_' . now()->format('Y-m-d_H-i-s') . '.csv';
+
+//     return response()->streamDownload(function () {
+//         $handle = fopen('php://output', 'w');
+
+//         // Header row
+//         fputcsv($handle, [
+//             'ID',
+//             'Batch Name',
+//             'Student Name',
+//             'Enroll Date',
+//         ]);
+
+//         // Batch rows
+//         Enroll::with('enroll')->cursor()->each(function ($enroll) use ($handle) {
+//             fputcsv($handle, [
+//                 $enroll->id,
+//                 optional($enroll->batch)->name,
+//                 optional($enroll->student)->name,
+//                 $enroll->enroll_date,            
+//             ]);
+//         });
+
+//         fclose($handle);
+//     }, $filename);
+// }
 
     public function render()
     {

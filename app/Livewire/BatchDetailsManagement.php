@@ -9,6 +9,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class BatchDetailsManagement extends Component
 {
@@ -108,6 +109,37 @@ class BatchDetailsManagement extends Component
         $this->lecture_title = '';
         $this->resetValidation();
     }
+public function export(): StreamedResponse
+{
+    $filename = 'batchdetails_' . now()->format('Y-m-d_H-i-s') . '.csv';
+
+    return response()->streamDownload(function () {
+        $handle = fopen('php://output', 'w');
+
+        // Header row
+        fputcsv($handle, [
+            'ID',
+            'Batch Name',
+            'Teacher Name',
+            'Lecture Date',
+            'Lecture Title',
+        ]);
+
+        // Correct model: BatchDetail
+        BatchDetail::with('batch', 'teacher')->cursor()->each(function ($batchdetails) use ($handle) {
+            fputcsv($handle, [
+                $batchdetails->id,
+                optional($batchdetails->batch)->name,
+                optional($batchdetails->teacher)->name,
+                $batchdetails->lecture_date,
+                $batchdetails->lecture_title,
+            ]);
+        });
+
+        fclose($handle);
+    }, $filename);
+}
+
 
     public function render()
     {
