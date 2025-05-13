@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandingPageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 use App\Livewire\BatchDetailsManagement;
@@ -17,19 +18,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentFrontController;
 use App\Http\Controllers\TeacherFrontController;
 
-Route::get('/studentfront', [StudentFrontController::class, 'index'])->name('studentfront');
-Route::get('/teacherfront', [TeacherFrontController::class, 'index'])->name('teacherfront');
 
 
 use Livewire\Volt\Volt;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/' , [BrandingPageController::class, 'index'])->name('home');
+Route::get('/our-course' , [BrandingPageController::class, 'course'])->name('course_index');
+Route::get('/our-batch' , [BrandingPageController::class, 'batchIndex'])->name('batch_index');
 
 
 
   Route::get('/dashboard', [DashboardController::class, 'index'])
+
  ->middleware(['auth'])
 ->name('dashboard');
 

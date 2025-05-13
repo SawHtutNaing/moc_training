@@ -25,4 +25,8 @@ class DashboardController extends Controller
 
         return view('dashboard', compact('totalUsers', 'totalStudents', 'totalTeachers', 'totalBatches', 'totalCourses','totalEnrollments'));
     }
+
+
+
+
 }

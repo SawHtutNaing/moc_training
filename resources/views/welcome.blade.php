@@ -1,168 +1,125 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MOC Training</title>
+@extends('branding.layouts')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+@section('content')
 
-    <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-    <style>
-        .swiper {
-            width: 100%;
-            height: auto;
-            max-height: 400px;
-        }
-        .swiper-slide img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-    </style>
-</head>
-
-<body class="font-sans bg-gray-100">
-
-<header class="bg-blue-50 text-black">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-        <a href="/" class="flex items-center space-x-2">
-            <img src="{{ asset('images/logo.png') }}" alt="MOC Logo" class="h-15 z-10 relative">
-        </a>
-        <button id="menu-toggle" class="sm:hidden text-white bg-blue-700 p-2 rounded-md">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-        </button>
-
-        <!-- Desktop Navigation -->
-        <nav class="hidden md:flex space-x-6 text-sm font-medium">
-            <a href="{{ route('studentfront') }}" class="text-black hover:text-blue-500">Students</a>
-            <a href="#" class="text-black hover:text-blue-500">Teachers</a>
-            <a href="#" class="text-black hover:text-blue-500">Batches</a>
-            <a href="#" class="text-black hover:text-blue-500">Courses</a>
-            <a href="#" class="text-black hover:text-blue-500">Enrolls</a>
-            <a href="#" class="text-black hover:text-blue-500">Galleries</a>
-        </nav>
-    </div>
-
-    <!-- Mobile Navigation -->
-    <div id="mobile-menu" class="md:hidden hidden px-4 pb-4 space-y-2">
-        <a href="{{ route('studentfront') }}" class="text-black hover:text-blue-500">Students</a>
-        <a href="#" class="text-black hover:text-blue-500">Teachers</a>
-        <a href="#" class="text-black hover:text-blue-500">Batches</a>
-        <a href="#" class="text-black hover:text-blue-500">Courses</a>
-        <a href="#" class="text-black hover:text-blue-500">Enrolls</a>
- 
-        <a href="#" class="text-black hover:text-blue-500">Galleries</a>
-    </div>
-</header>
-
-<section class="relative h-96 overflow-hidden flex items-center justify-center bg-gray-700">
-    <img src="{{ asset('images/officeone.jfif') }}" alt="Office" class="absolute inset-0 w-full h-full object-cover filter blur-sm">
-    <div class="absolute inset-0 bg-black opacity-40"></div>
-    <div class="relative z-10 text-center px-4 text-white">
-        <h1 class="text-3xl md:text-6xl font-bold text-white">Welcome to the Ministry of Commerce</h1>
-        <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto">Empowering businesses and fostering growth in Myanmar</p>
-        <a href="{{ route('login') }}" class="mt-6 inline-block px-8 py-3 bg-blue-500 hover:bg-white text-white hover:text-blue-500 rounded-md text-lg font-semibold transition">Login</a>
-        <a href="{{ route('register') }}" class="mt-6 inline-block px-8 py-3 bg-blue-500 hover:bg-white text-white hover:text-blue-500 rounded-md text-lg font-semibold transition">Register</a>
+<!-- Enhanced Hero Section -->
+<section class="relative h-[500px] md:h-[600px] overflow-hidden flex items-center justify-center bg-gray-700">
+    <img src="{{ asset('images/officeone.jfif') }}" alt="Office" class="absolute inset-0 w-full h-full object-cover filter blur-sm scale-105 transition-transform duration-10000 hover:scale-110">
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40"></div>
+    <div class="relative z-10 text-center px-4 text-white max-w-4xl mx-auto animate-fadeIn" style="animation-delay: 0.2s;">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">Welcome to the Ministry of Commerce</h1>
+        <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto text-gray-100">Empowering businesses and fostering growth in Myanmar</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <a href="#services" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-lg font-medium transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">Our Services</a>
+            <a href="#contact" class="px-8 py-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border border-white/30 rounded-md text-lg font-medium transition-all duration-300 hover:shadow-lg">Contact Us</a>
+        </div>
     </div>
 </section>
 
-<!-- Swiper Image Slider -->
-<section class="py-12 bg-white">
+<!-- Enhanced Swiper Image Slider -->
+<section class="py-16 bg-white">
     <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-6">Gallery</h2>
-        <div class="swiper mySwiper">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-3">Our Gallery</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-4"></div>
+            <p class="text-gray-600 max-w-2xl mx-auto">Explore our facilities and activities through our image gallery</p>
+        </div>
+
+        <div class="swiper mySwiper rounded-xl overflow-hidden shadow-lg">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="{{ asset('images/officeone.jfif') }}" alt="Slide 1"></div>
-                <div class="swiper-slide"><img src="{{ asset('images/officetwo.jfif') }}" alt="Slide 2"></div>
-                <div class="swiper-slide"><img src="{{ asset('images/officeone.jfif') }}" alt="Slide 3"></div>
-                <div class="swiper-slide"><img src="{{ asset('images/officetwo.jfif') }}" alt="Slide 4"></div>
+                <div class="swiper-slide"><img src="{{ asset('images/officeone.jfif') }}" alt="Slide 1" class="transition-transform duration-500"></div>
+                <div class="swiper-slide"><img src="{{ asset('images/officetwo.jfif') }}" alt="Slide 2" class="transition-transform duration-500"></div>
+                <div class="swiper-slide"><img src="{{ asset('images/officeone.jfif') }}" alt="Slide 3" class="transition-transform duration-500"></div>
+                <div class="swiper-slide"><img src="{{ asset('images/officetwo.jfif') }}" alt="Slide 4" class="transition-transform duration-500"></div>
             </div>
             <div class="swiper-pagination"></div>
         </div>
     </div>
 </section>
 
-<section class="py-16 bg-white">
+<!-- Enhanced Services Section -->
+<section id="services" class="py-20 bg-gray-50">
     <div class="container mx-auto text-center px-4">
-        <h2 class="text-3xl font-bold mb-10">Our Services</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            <div class="bg-gray-100 p-6 shadow-md rounded-md">
-                <img src="{{ asset('images/officeone.jfif') }}" alt="Service 1" class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold mb-2">Business Licensing</h3>
-                <p class="text-gray-700">We provide services for business registrations and licensing.</p>
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-3">Our Services</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-4"></div>
+            <p class="text-gray-600 max-w-2xl mx-auto">Comprehensive solutions to support your business needs</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="service-card bg-white p-6 rounded-xl shadow-md overflow-hidden group">
+                <div class="relative h-48 mb-6 overflow-hidden rounded-lg">
+                    <img src="{{ asset('images/officeone.jfif') }}" alt="Service 1" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-blue-700">Business Licensing</h3>
+                <p class="text-gray-600">We provide comprehensive services for business registrations and licensing to help you establish your enterprise legally and efficiently.</p>
+                <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium">Learn more →</a>
             </div>
-            <div class="bg-gray-100 p-6 shadow-md rounded-md">
-                <img src="{{ asset('images/officetwo.jfif') }}" alt="Service 2" class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold mb-2">Export & Import</h3>
-                <p class="text-gray-700">Guiding businesses through import and export processes in Myanmar.</p>
+
+            <div class="service-card bg-white p-6 rounded-xl shadow-md overflow-hidden group">
+                <div class="relative h-48 mb-6 overflow-hidden rounded-lg">
+                    <img src="{{ asset('images/officetwo.jfif') }}" alt="Service 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-blue-700">Export & Import</h3>
+                <p class="text-gray-600">Guiding businesses through import and export processes in Myanmar with expert advice on regulations, documentation, and compliance.</p>
+                <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium">Learn more →</a>
             </div>
-            <div class="bg-gray-100 p-6 shadow-md rounded-md">
-                <img src="{{ asset('images/officeone.jfif') }}" alt="Service 3" class="w-full h-40 object-cover rounded-md mb-4">
-                <h3 class="text-xl font-semibold mb-2">Regulations & Compliance</h3>
-                <p class="text-gray-700">Ensuring that your business complies with all national regulations.</p>
+
+            <div class="service-card bg-white p-6 rounded-xl shadow-md overflow-hidden group">
+                <div class="relative h-48 mb-6 overflow-hidden rounded-lg">
+                    <img src="{{ asset('images/officeone.jfif') }}" alt="Service 3" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <h3 class="text-xl font-semibold mb-3 text-blue-700">Regulations & Compliance</h3>
+                <p class="text-gray-600">Ensuring that your business complies with all national regulations and standards to avoid penalties and operate smoothly.</p>
+                <a href="#" class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium">Learn more →</a>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-16 bg-blue-50">
+<!-- Enhanced Contact Section -->
+<section id="contact" class="py-20 bg-white">
     <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-8">Contact Us</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-                <form class="space-y-4">
-                    <input type="text" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-md">
-                    <input type="email" placeholder="Your Email" class="w-full p-3 border border-gray-300 rounded-md">
-                    <textarea rows="5" placeholder="Your Message" class="w-full p-3 border border-gray-300 rounded-md"></textarea>
-                    <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">Send Message</button>
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-3">Contact Us</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-4"></div>
+            <p class="text-gray-600 max-w-2xl mx-auto">Get in touch with our team for any inquiries or assistance</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="bg-blue-50 p-8 rounded-xl shadow-md">
+                <form class="space-y-5">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                        <input type="text" id="name" placeholder="Enter your full name" class="form-input w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
+                        <input type="email" id="email" placeholder="Enter your email address" class="form-input w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
+                        <textarea id="message" rows="5" placeholder="How can we help you?" class="form-input w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all duration-300"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg font-medium">Send Message</button>
                 </form>
             </div>
-            <div>
-                <iframe src="https://www.google.com/maps/embed?pb=..." width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+            <div class="rounded-xl overflow-hidden shadow-lg h-[400px]">
+                <iframe src="https://www.google.com/maps/embed?pb=..." width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full"></iframe>
             </div>
         </div>
     </div>
 </section>
 
-<footer class="bg-blue-700 text-white py-6">
-    <div class="container mx-auto text-center px-4">
-        <p>&copy; {{ date('Y') }} Ministry of Commerce, Myanmar. All Rights Reserved.</p>
-        <div class="mt-4 space-x-4">
-            <a href="#" class="text-white hover:text-blue-300">Privacy Policy</a>
-            <a href="#" class="text-white hover:text-blue-300">Terms of Service</a>
-        </div>
-    </div>
-</footer>
 
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<script>
-    document.getElementById('menu-toggle').addEventListener('click', () => {
-        document.getElementById('mobile-menu').classList.toggle('hidden');
-    });
-
-    var swiper = new Swiper(".mySwiper", {
-        loop: true,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-    });
-</script>
-
-</body>
-</html>
+@endsection
