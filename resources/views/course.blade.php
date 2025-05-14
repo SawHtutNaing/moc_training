@@ -11,7 +11,7 @@
     </div>
     <div class="container mx-auto px-4 relative z-10">
         <div class="text-center text-white max-w-3xl mx-auto">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Courses</h1>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">Our Courses</h1>
             <p class="text-lg md:text-xl text-blue-100">Explore our comprehensive range of courses designed to enhance your skills and knowledge in various domains of commerce and business.</p>
 
             <div class="mt-8 flex flex-wrap justify-center gap-4">

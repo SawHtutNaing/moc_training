@@ -5,7 +5,7 @@
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
-                <h3 class="text-xl font-bold mb-4">About MOC</h3>
+                <h3 class="text-xl font-bold mb-4 text-white">About MOC</h3>
                 <p class="text-blue-100 mb-4">The Ministry of Commerce is dedicated to fostering economic growth and supporting businesses throughout Myanmar.</p>
                 <div class="flex space-x-4">
                     <a href="#" class="text-white hover:text-blue-200 transition-colors duration-300">
@@ -27,7 +27,7 @@
             </div>
 
             <div>
-                <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                <h3 class="text-xl font-bold mb-4 text-white">Quick Links</h3>
                 <ul class="space-y-2">
                     <li><a href="#" class="text-blue-100 hover:text-white transition-colors duration-300">Home</a></li>
                     <li><a href="#services" class="text-blue-100 hover:text-white transition-colors duration-300">Services</a></li>
@@ -38,7 +38,7 @@
             </div>
 
             <div>
-                <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+                <h3 class="text-xl font-bold mb-4 text-white">Contact Information</h3>
                 <ul class="space-y-3 text-blue-100">
                     <li class="flex items-start">
                         <svg class="w-5 h-5 mt-1 mr-3 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

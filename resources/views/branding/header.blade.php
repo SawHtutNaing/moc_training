@@ -11,11 +11,11 @@
             <!-- Desktop Navigation with micro-interactions -->
             <nav class="hidden md:flex space-x-8 text-sm font-medium">
                 <a href="{{ route('home') }}" class="nav-link text-gray-700 hover:text-blue-700 py-2 transition-colors duration-300">Home</a>
-                <a href="{{ route('course_index') }}" class="nav-link text-gray-700 hover:text-blue-700 py-2 transition-colors duration-300">Teachers</a>
+                <a href="{{ route('course_index') }}" class="nav-link text-gray-700 hover:text-blue-700 py-2 transition-colors duration-300">Courses</a>
                 <a href="{{ route('batch_index') }}" class="nav-link text-gray-700 hover:text-blue-700 py-2 transition-colors duration-300">Batches</a>
 
                 <a href="#" class="nav-link text-gray-700 hover:text-blue-700 py-2 transition-colors duration-300">Enrolls</a>
-                <a href="#" class="nav-link text-gray-700 hover:text-blue-700 py-2 transition-colors duration-300">Galleries</a>
+                <a href="{{ route('gallery_index') }}" class="nav-link text-gray-700 hover:text-blue-700 py-2 transition-colors duration-300">Galleries</a>
             </nav>
 
             <!-- Auth buttons with enhanced styling -->

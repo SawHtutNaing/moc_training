@@ -2,11 +2,93 @@
 
 @section('content')
 
+@vite(['resources/css/app.css', 'resources/js/app.js'])
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<style>
+  .swiper-slide {
+    width: 100px; /* Smaller width for collapsed images */
+    height: 300px; /* Smaller height for collapsed images */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:30px;
+    transition: transform 0.3s ease-in-out;
 
+  }
+
+  .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .swiper-slide-active {
+    margin-top: 0px; /* Reset margin for active slide */
+   width: 170px; /* Smaller width for collapsed images */
+    height: 350px; /* Smaller height for collapsed images */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    align-items: stretch; /* Scale up the active (middle)our slide */
+    z-index: 10; /* Bring the active slide to the front */
+  }
+
+  .swiper-slide-active img {
+  
+    transition: transform 0.5s ease;
+  }
+
+  @media (min-width: 768px) {
+  .swiper-slide {
+    width: 100px;
+    height: 300px; /* Smaller height for collapsed images */
+    
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .swiper-slide-active {
+    margin-top: 0px; /* Reset margin for active slide */
+   width: 800px; /* Smaller width for collapsed images */
+    height: 350px; /* Smaller height for collapsed images */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    align-items: stretch; /* Scale up the active (middle)our slide */
+    z-index: 10; /* Bring the active slide to the front */
+  }
+}
+</style>
+
+<!-- Swiper Initialization -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const swiper = new Swiper(".myNewSwiper", {
+      slidesPerView: 5, // Show 5 slides at a time
+      spaceBetween: 0,
+      centeredSlides: true, // Center the active slide
+      loop: true,
+      autoplay: {
+        delay: 3500,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+     
+    });
+  });
+</script>
 
 <!-- Enhanced Hero Section -->
 <section class="relative h-[500px] md:h-[600px] overflow-hidden flex items-center justify-center bg-gray-700">
-    <img src="{{ asset('images/officeone.jfif') }}" alt="Office" class="absolute inset-0 w-full h-full object-cover filter blur-sm scale-105 transition-transform duration-10000 hover:scale-110">
+    <img src="{{ asset('images/main.png') }}" alt="Office" class="absolute inset-0 w-full h-full object-cover filter  scale-105 transition-transform duration-10000 hover:scale-110">
     <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40"></div>
     <div class="relative z-10 text-center px-4 text-white max-w-4xl mx-auto animate-fadeIn" style="animation-delay: 0.2s;">
         <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">Welcome to the Ministry of Commerce</h1>
@@ -18,29 +100,53 @@
     </div>
 </section>
 
-<!-- Enhanced Swiper Image Slider -->
-<section class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-3">Our Gallery</h2>
+<section id="galleries" class="py-20 bg-gray-50
+">
+    <div class="container mx-auto text-center px-4">
+       <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-3">Our Gallery</h2>
             <div class="w-20 h-1 bg-blue-600 mx-auto mb-4"></div>
-            <p class="text-gray-600 max-w-2xl mx-auto">Explore our facilities and activities through our image gallery</p>
-        </div>
 
-        <div class="swiper mySwiper rounded-xl overflow-hidden shadow-lg">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="{{ asset('images/officeone.jfif') }}" alt="Slide 1" class="transition-transform duration-500"></div>
-                <div class="swiper-slide"><img src="{{ asset('images/officetwo.jfif') }}" alt="Slide 2" class="transition-transform duration-500"></div>
-                <div class="swiper-slide"><img src="{{ asset('images/officeone.jfif') }}" alt="Slide 3" class="transition-transform duration-500"></div>
-                <div class="swiper-slide"><img src="{{ asset('images/officetwo.jfif') }}" alt="Slide 4" class="transition-transform duration-500"></div>
-            </div>
-            <div class="swiper-pagination"></div>
+
+    <!-- Swiper Container -->
+    <div class="swiper myNewSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="{{ asset('images/main.png') }}" alt="Image 1" />
         </div>
+        <div class="swiper-slide">
+          <img src="{{ asset('images/3.png') }}" alt="Image 2" />
+        </div>
+        <div class="swiper-slide">
+          <img src="{{ asset('images/4.png') }}" alt="Image 3" />
+        </div>
+        <div class="swiper-slide">
+          <img src="{{ asset('images/1.png') }}" alt="Image 4" />
+        </div>
+         <div class="swiper-slide">
+          <img src="{{ asset('images/2.png') }}" alt="Image 4" />
+        </div>
+        <div class="swiper-slide">
+          <img src="{{ asset('images/5.png') }}" alt="Image 4" />
+        </div>
+        <div class="swiper-slide">
+          <img src="{{ asset('images/2.png') }}" alt="Image 4" />
+        </div>
+        <div class="swiper-slide">
+          <img src="{{ asset('images/3.png') }}" alt="Image 4" />
+        </div>
+      </div>
+
+      <!-- Optional Controls -->
+      <div class="swiper-pagination mt-6"></div>
+    
     </div>
+  </div>
 </section>
 
+
 <!-- Enhanced Services Section -->
-<section id="services" class="py-20 bg-gray-50">
+<section id="services" class="py-20 bg-gray-50
+">
     <div class="container mx-auto text-center px-4">
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-3">Our Services</h2>
@@ -51,7 +157,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <div class="service-card bg-white p-6 rounded-xl shadow-md overflow-hidden group">
                 <div class="relative h-48 mb-6 overflow-hidden rounded-lg">
-                    <img src="{{ asset('images/officeone.jfif') }}" alt="Service 1" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <img src="{{ asset('images/2.png') }}" alt="Service 1" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <h3 class="text-xl font-semibold mb-3 text-blue-700">Business Licensing</h3>
@@ -61,7 +167,7 @@
 
             <div class="service-card bg-white p-6 rounded-xl shadow-md overflow-hidden group">
                 <div class="relative h-48 mb-6 overflow-hidden rounded-lg">
-                    <img src="{{ asset('images/officetwo.jfif') }}" alt="Service 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <img src="{{ asset('images/3.png') }}" alt="Service 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <h3 class="text-xl font-semibold mb-3 text-blue-700">Export & Import</h3>
@@ -71,7 +177,7 @@
 
             <div class="service-card bg-white p-6 rounded-xl shadow-md overflow-hidden group">
                 <div class="relative h-48 mb-6 overflow-hidden rounded-lg">
-                    <img src="{{ asset('images/officeone.jfif') }}" alt="Service 3" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <img src="{{ asset('images/4.png') }}" alt="Service 3" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-blue-900/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <h3 class="text-xl font-semibold mb-3 text-blue-700">Regulations & Compliance</h3>

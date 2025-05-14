@@ -22,6 +22,12 @@ class BrandingPageController extends Controller
 
     }
 
+    public function gallery(){
+        return view('gallery'); // Change to your actual Blade file
+
+
+    }
+
     public function batchIndex(){
 
     }

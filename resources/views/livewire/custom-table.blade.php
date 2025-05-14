@@ -25,8 +25,18 @@
             @forelse ($config['data'] as $row)
                 <tr class="border-b border-gray-200 hover:bg-gray-50">
                     @foreach ($config['columns'] as $column)
-                        <td class="px-4 py-2 text-dark border border-gray-200 text-right whitespace-nowrap">
-                            {{ data_get($row, $column['key']) }}
+                        <td class="px-4 py-2 text-dark border border-gray-200 text-center whitespace-nowrap">
+                            @if ($column['key'] === 'profile_image')
+                                @if (data_get($row, $column['key']))
+                                    <div class="flex justify-center">
+                                        <img src="{{ Storage::url(data_get($row, $column['key'])) }}" alt="Profile Image" class="w-10 h-10 rounded-full object-cover">
+                                    </div>
+                                @else
+                                    <span class="text-gray-500">N/A</span>
+                                @endif
+                            @else
+                                {{ data_get($row, $column['key']) }}
+                            @endif
                         </td>
                     @endforeach
                     @if (!empty($config['actions']))
@@ -56,4 +66,3 @@
         </tbody>
     </table>
 </div>
-

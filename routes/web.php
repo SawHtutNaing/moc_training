@@ -25,6 +25,8 @@ use Livewire\Volt\Volt;
 Route::get('/' , [BrandingPageController::class, 'index'])->name('home');
 Route::get('/our-course' , [BrandingPageController::class, 'course'])->name('course_index');
 Route::get('/our-batch' , [BrandingPageController::class, 'batchIndex'])->name('batch_index');
+Route::get('/our-gallery' , [BrandingPageController::class, 'gallery'])->name('gallery_index');
+
 
 
 

@@ -5,17 +5,20 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Models\Student;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Storage;
 
 class StudentManagement extends Component
 {
-    use WithPagination;
+     use WithPagination, WithFileUploads;
 
     public $studentId = null;
     public $showModal = false;
     public $refreshKey = 0; // Used to force UI refresh
-
+    // Removed duplicate declaration
+    public $existingProfileImage = null; // To store the existing image path
     #[Validate('required|string|max:255')]
     public $name = '';
 
@@ -36,6 +39,8 @@ class StudentManagement extends Component
 
     #[Validate('required|string|max:500')]
     public $address = '';
+    #[Validate('nullable|image|max:1025')]
+    public $profile_image = null; // For file upload
 
     public function openModal()
     {
@@ -61,6 +66,17 @@ class StudentManagement extends Component
             'email' => $this->email,
             'address' => $this->address,
         ];
+
+        if ($this->profile_image) {
+            // Delete the old image if it exists
+            if ($this->existingProfileImage) {
+                Storage::delete($this->existingProfileImage);
+            }
+
+            // Store the new image
+            $data['profile_image'] = $this->profile_image->store('profile_images', 'public');
+        }
+
         $msg = $this->studentId ? 'Student updated successfully!' : 'Student created successfully!';
         if ($this->studentId) {
             // Update existing student
@@ -91,15 +107,23 @@ class StudentManagement extends Component
         $this->phone = $student->phone;
         $this->email = $student->email;
         $this->address = $student->address;
+        $this->existingProfileImage = $student->profile_image;
         $this->showModal = true;
     }
 
     #[On('delete-student')]
     public function delete($id)
     {
-        Student::findOrFail($id)->delete();
-        $this->resetPage(); // Reset to first page after delete
-        $this->refreshKey = rand(1000, 9999); // Force UI refresh
+        $student = Student::findOrFail($id);
+
+        // Delete the profile image if it exists
+        if ($student->profile_image) {
+            Storage::delete($student->profile_image);
+        }
+
+        $student->delete();
+        $this->resetPage();
+        $this->refreshKey = rand(1000, 9999);
         $this->dispatch('notify', message: 'Student deleted successfully!');
     }
 
@@ -113,6 +137,8 @@ class StudentManagement extends Component
         $this->phone = '';
         $this->email = '';
         $this->address = '';
+        $this->profile_image = null;
+        $this->existingProfileImage = null;
         $this->resetValidation();
     }
 
