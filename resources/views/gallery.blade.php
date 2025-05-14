@@ -7,11 +7,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   background-color: #03afff;
   border-radius: 4px;
   transition: transform 0.3s ease-in-out;
-
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -43,95 +41,14 @@
     </style>
 
 <div class="grid-container">
-      <div
-        class="grid-item tall"
-        style="background-image: url('images/1.png')"
-      ></div>
-      <div
-        class="grid-item"
-        style="
-          background-image: url('images/2.png');
-        "
-      ></div>
-
-      <div
-        class="grid-item wide"
-        style="
-          background-image: url('images/3.png');
-        "
-      ></div>
-      <div
-        class="grid-item"
-        style="
-          background-image: url('images/4.png');
-        "
-      ></div>
-      <div
-        class="grid-item"
-        style="
-          background-image: url('images/5.png');
-        "
-      ></div>
-      <div
-        class="grid-item"
-        style="
-          background-image: url('images/main.png');
-        "
-      ></div>
-     <div
-        class="grid-item"
-        style="
-          background-image: url('images/7.png');
-        "
-      ></div>
-      <div
-        class="grid-item"
-        style="
-          background-image: url('images/8.png');
-        "
-      ></div>
-     <div
-        class="grid-item"
-        style="
-          background-image: url('images/9.png');
-        "
-      ></div>
-      <div
-        class="grid-item"
-        style="
-          background-image: url('images/10.png');
-        "
-      ></div>
-      <div
-        class="grid-item"
-        style="
-          background-image: url('images/11.png');
-        "
-      ></div>
-      <div
-        class="grid-item"
-        style="
-          background-image: url('images/12.png');
-        "
-      ></div>
-      <div
-        class="grid-item"
-        style="
-          background-image: url('images/13.png');
-        "
-      ></div>
-      <div
-        class="grid-item"
-        style="
-          background-image: url('images/3.png');
-        "
-      ></div>
-      <div
-        class="grid-item"
-        style="
-          background-image: url('images/4.png');
-        "
-      ></div>
-    </div>
+    @forelse ($galleries as $gallery)
+        <div
+            class="grid-item {{ $loop->index % 5 == 0 ? 'tall' : ($loop->index % 3 == 0 ? 'wide' : '') }}"
+            style="background-image: url('{{ asset('storage/' . $gallery->file_name) }}')"
+        ></div>
+    @empty
+        <p class="text-gray-500 col-span-full">No gallery images found.</p>
+    @endforelse
+</div>
 
 @endsection

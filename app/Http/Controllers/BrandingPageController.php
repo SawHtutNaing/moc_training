@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gallery;
 use Illuminate\Http\Request;
 
 class BrandingPageController extends Controller
@@ -11,7 +12,13 @@ class BrandingPageController extends Controller
         return view('welcome');
     }
     public function student(){
-        return view('studentfront.index'); // Change to your actual Blade file
+        return view('student'); // Change to your actual Blade file
+
+
+    }
+
+     public function teacher(){
+        return view('teacher'); // Change to your actual Blade file
 
 
     }
@@ -23,12 +30,13 @@ class BrandingPageController extends Controller
     }
 
     public function gallery(){
-        return view('gallery'); // Change to your actual Blade file
+         $galleries = Gallery::all();
+        return view('gallery',compact('galleries')); // Change to your actual Blade file
 
 
     }
 
-    public function batchIndex(){
-
+    public function batch(){
+        return view('batch'); // Change to your actual Blade file
     }
 }
