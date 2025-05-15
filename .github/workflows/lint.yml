@@ -20,26 +20,7 @@ jobs:
         extensions: mbstring, bcmath, xml, curl, mysql
         coverage: none
 
-    - name: Cache Composer dependencies
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: composer-${{ hashFiles('composer.lock') }}
-        restore-keys: composer-
-
-    # - name: Install dependencies
-      # run: composer install --no-progress --prefer-dist --optimize-autoloader
-
-    # - name: Copy .env
-      # run: cp .env.example .env
-
-    # - name: Generate application key
-      # run: php artisan key:generate
-
-    # - name: Run Laravel tests
-      # run: php artisan test
-
-    - name: Deploy to server
+    - name: Deploy to server (only git pull)
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         SSH_USER: ${{ secrets.SSH_USER }}
@@ -50,7 +31,4 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key $SSH_USER@$SSH_HOST << 'EOF'
           cd /var/www/moc_training
           git pull origin master
-          # composer install --no-interaction --prefer-dist --optimize-autoloader
-          # php artisan migrate --force
-          php artisan optimize:clear
         EOF
