@@ -27,7 +27,8 @@ public function students()
         return $this->hasMany(BatchDetail::class);
     }
 
-    public function gallery()
+
+    public function galleries()
     {
         return $this->hasMany(Gallery::class);
     }

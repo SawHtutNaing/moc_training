@@ -27,7 +27,7 @@ Route::get('/our-teacher' , [BrandingPageController::class, 'teacher'])->name('t
 Route::get('/our-student' , [BrandingPageController::class, 'student'])->name('student_index');
 Route::get('/our-course' , [BrandingPageController::class, 'course'])->name('course_index');
 Route::get('/our-batch' , [BrandingPageController::class, 'batch'])->name('batch_index');
-Route::get('/our-gallery' , [BrandingPageController::class, 'gallery'])->name('gallery_index');
+Route::get('/our-gallery' , [BrandingPageController::class, 'galleries'])->name('gallery_index');
 
 
 

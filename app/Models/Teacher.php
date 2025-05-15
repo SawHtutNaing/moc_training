@@ -11,6 +11,10 @@ class Teacher extends Model
     {
         return $this->hasMany(BatchDetail::class);
     }
+
+
+
+
     public function getGenderLabelAttribute()
 {
     return match($this->gender) {

@@ -8,6 +8,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\On; 
+use Illuminate\Support\Collection;
 
 class GalleryManagement extends Component
 {
@@ -20,8 +21,6 @@ class GalleryManagement extends Component
     public $showModal = false;
     public $showbatch = false;
     public $searchBatchId = '';
-  public int $on_page = 5;
-   
 
 
     #[Validate('required|image|max:2048')]
@@ -42,6 +41,7 @@ class GalleryManagement extends Component
     public function loadGalleries()
     {
         $this->galleries = Gallery::with('batch')->get();
+        
         
   
     }
@@ -123,10 +123,7 @@ class GalleryManagement extends Component
     }
     
 
-    public function loadMore(): void
-    {
-        $this->on_page += 6;
-    }
+   
     public function render()
     {
         $this->galleries = Gallery::with('batch')->get();
