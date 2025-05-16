@@ -3,63 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Models\Batch;
-use App\Models\Enroll;
-use App\Models\Gallery;
+use App\Models\Student;
 use App\Models\Teacher;
-use Illuminate\Http\Request;
-
-
 
 class BrandingPageController extends Controller
 {
-
-    public function index(){
+    public function index()
+    {
         return view('welcome');
     }
-    public function student(){
-       
-        return view('student',compact('students')); // Change to your actual Blade file
 
-
+    public function student()
+    {
+        // Eager load enrolls for each student
+        $students = Student::with('enrollments')->get();
+        $allBatches = Batch::orderBy('name')->get();
+        return view('student', compact('students', 'allBatches'));
     }
 
+    public function teacher()
+    {
+        $teachers = Teacher::with('batchDetails.batch')->paginate(4);
 
+        foreach ($teachers as $teacher) {
+            $teacher->unique_batches = $teacher->batchDetails->pluck('batch_id')->unique()->count();
+            $batchIds = $teacher->batchDetails->pluck('batch_id')->unique();
+            $teacher->student_total = \App\Models\Enroll::whereIn('batch_id', $batchIds)->pluck('student_id')->unique()->count();
+        }
 
+        $allBatches = \App\Models\Batch::orderBy('name')->get();
 
-public function teacher()
-{    // Eager load batchDetails and enrollments
-    $teachers = Teacher::with('batchDetails.batch.enrollments')->paginate(4);
-
-    foreach ($teachers as $teacher) {
-        // Count unique batches
-        $teacher->unique_batches = $teacher->batchDetails->pluck('batch_id')->unique()->count();
-
-        // Get all enrollments from all batches linked to this teacher
-        $batchIds = $teacher->batchDetails->pluck('batch_id')->unique();
-        
-        $studentCount = Enroll::whereIn('batch_id', $batchIds)->pluck('student_id')->unique()->count();
-        $teacher->student_total = $studentCount;
+        return view('teacher', compact('teachers', 'allBatches'));
     }
 
-    return view('teacher', compact('teachers'));
-}
-
-  
-    public function course(){
-        return view('course'); // Change to your actual Blade file
-
-
+    public function course()
+    {
+        return view('course');
     }
 
     public function galleries()
-{
-    $batches = Batch::with('galleries')->get(); // get all batches with their related galleries
-    return view('gallery', compact('batches')); // pass only $batches, no need to pass $galleries
-}
+    {
+        $batches = Batch::with('galleries')->get();
+        return view('gallery', compact('batches'));
+    }
 
-
-    public function batch(){
-       
-        return view('batch'); // Change to your actual Blade file
+    public function batch()
+    {
+        return view('batch');
     }
 }

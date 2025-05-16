@@ -23,12 +23,12 @@
             </nav>
 
             <!-- Auth buttons with enhanced styling -->
-            <div class="hidden md:flex space-x-3">
+            <!-- <div class="hidden md:flex space-x-3">
                 @auth
                 <a href="{{ route('login') }}" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5">Login</a>
                 <a href="{{ route('register') }}" class="px-5 py-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 rounded-md text-sm font-medium transition-all duration-300 hover:shadow-md">Register</a>
                 @endauth
-            </div>
+            </div> -->
 
             <!-- Mobile menu button with animation -->
             <button id="menu-toggle" class="md:hidden text-white bg-blue-700 p-2 rounded-md hover:bg-blue-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">

@@ -4,6 +4,7 @@
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 <!-- Page Header -->
 <section class="relative py-16 bg-gradient-to-r from-blue-800 to-blue-600">
@@ -12,7 +13,7 @@
     </div>
     <div class="container mx-auto px-4 relative z-10">
         <div class="text-center text-white max-w-3xl mx-auto">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">Our Teachers</h1>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">Our Students</h1>
             <p class="text-lg md:text-xl text-blue-100">Explore our comprehensive range of courses designed to enhance your skills and knowledge in various domains of commerce and business.</p>
         </div>
     </div>
@@ -24,7 +25,7 @@
     <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
         <div class="bg-purple-100 p-6 rounded-2xl text-center">
             <h3 class="text-xl font-semibold mb-2">Fun Quiz</h3>
-            <p>Boost understanding with short quizzes.</p>
+            <p>Boost understanding with smaple quizzes.</p>
         </div>
         <div class="bg-purple-400 text-white p-6 rounded-2xl text-center">
             <h3 class="text-xl font-semibold mb-2">Creative Activities</h3>
@@ -37,48 +38,36 @@
     </div>
 </section>
 
-
-<!-- <section class="bg-gray-50 py-16">
+<!-- Students Section with Swiper Image Slideshow -->
+<section class="bg-gray-50 py-16" style="margin-top:-0px;">
     <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-12">Meet Our <span class="text-purple-600 script-font">Instructors</span></h2>
-
-        <div id="teachers-container">
-            @include('partials.teacher-cards', ['teachers' => $teachers])
-        </div>
-    </div>
-</section> -->
-
-<!-- Teachers Section -->
-<section class="bg-gray-50 py-16">
-    <div class="max-w-6xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-12">Meet Our <span class="text-purple-600 script-font">Instructors</span></h2>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            @foreach($teachers as $teacher)
-                <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all text-center">
-                    <div class="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-purple-400 shadow mb-4">
-                        <img src="{{ $teacher->profile_image ? asset('storage/' . $teacher->profile_image) : asset('images/default-profile.png') }}" class="object-cover w-full h-full" alt="{{ $teacher->name }}">
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-1">{{ $teacher->name }}</h3>
-                    <p class="text-purple-600 font-medium">{{ $teacher->position }}</p>
-                    <p class="text-gray-500 text-sm mb-4">{{ $teacher->organization ?? '' }}</p>
-                    <p class="text-gray-600 text-sm mb-2">📞 {{ $teacher->phone ?? 'N/A' }}</p>
-                    <div class="flex justify-center gap-8 mt-4">
-                        <div>
-                            <p class="text-2xl font-bold text-purple-700 count-up" data-count="{{ $teacher->unique_batches }}">0</p>
-                            <p class="text-xs text-gray-500">Batches</p>
-                        </div>
-                        <div>
-                            <p class="text-2xl font-bold text-yellow-500 count-up" data-count="{{ $teacher->student_total }}">0</p>
-                            <p class="text-xs text-gray-500">Students</p>
-                        </div>
-                    </div>
-                </div>
+        <h2 class="text-3xl font-bold text-center mb-12">Meet Our <span class="text-purple-600 script-font">Students</span></h2>
+        <!-- Batch Filter Buttons -->
+        <div class="flex flex-wrap justify-center gap-3 my-8">
+            <button class="batch-btn bg-purple-600 text-white px-5 py-2 rounded-full font-semibold shadow hover:bg-purple-700 transition active" data-batch="all">All</button>
+            @foreach($allBatches as $batch)
+                <button class="batch-btn bg-gray-200 text-purple-700 px-5 py-2 rounded-full font-semibold shadow hover:bg-purple-100 transition" data-batch="batch-{{ $batch->id }}">{{ $batch->name }}</button>
             @endforeach
         </div>
-
-        <!-- Pagination Links -->
-        <div class="mt-10 flex justify-center">
-            {{ $teachers->links() }}
+        <!-- Swiper Slideshow -->
+        <div class="swiper student-swiper">
+            <div class="swiper-wrapper">
+                @foreach($students as $student)
+                    <div class="swiper-slide student-card bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all text-center mx-2"
+                         data-batches="@foreach($student->enrollments as $enrollment)batch-{{ $enrollment->batch_id }};@endforeach">
+                        <div class="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-purple-400 shadow mb-4">
+                            <img src="{{ $student->profile_image ? asset('storage/' . $student->profile_image) : asset('images/default-profile.png') }}" class="object-cover w-full h-full" alt="{{ $student->name }}">
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">{{ $student->name }}</h3>
+                        <p class="text-gray-600 text-sm mb-1">DOB: {{ $student->dob }}</p>
+                        <p class="text-gray-600 text-sm mb-1">Phone: {{ $student->phone }}</p>
+                        <p class="text-gray-600 text-sm mb-1">Email: {{ $student->email }}</p>
+                    </div>
+                @endforeach
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
     </div>
 </section>
@@ -105,25 +94,78 @@
     </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <script>
-// Count-up animation
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.count-up').forEach(el => {
-        const target = +el.getAttribute('data-count');
-        let count = 0;
-        const increment = Math.ceil(target / 50);
-        function update() {
-            count += increment;
-            if (count >= target) {
-                el.textContent = target;
-            } else {
-                el.textContent = count;
-                requestAnimationFrame(update);
-            }
+    // Swiper slider for students
+    let studentSwiper = new Swiper('.student-swiper', {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        loop: false,
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        breakpoints: {
+            0: { slidesPerView: 1 },
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 4 }
         }
-        update();
+    });
+
+    // Batch filter logic for Swiper
+    const batchBtns = document.querySelectorAll('.batch-btn');
+    batchBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            batchBtns.forEach(b => b.classList.remove('bg-purple-600', 'text-white', 'active'));
+            batchBtns.forEach(b => b.classList.add('bg-gray-200', 'text-purple-700'));
+            this.classList.remove('bg-gray-200', 'text-purple-700');
+            this.classList.add('bg-purple-600', 'text-white', 'active');
+
+            const batch = this.getAttribute('data-batch');
+            const slides = document.querySelectorAll('.student-card.swiper-slide');
+            slides.forEach(card => {
+                if (batch === 'all') {
+                    card.style.display = '';
+                } else {
+                    const batches = (card.getAttribute('data-batches') || '').split(';').map(s => s.trim()).filter(Boolean);
+                    if (batches.includes(batch)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+            studentSwiper.update();
+            studentSwiper.slideTo(0);
+        });
+    });
+
+    // Wave animation on scroll
+    const wave = document.getElementById('wave');
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        wave.style.transform = `translate(0, ${scrollY * 0.5}px)`;
     });
 });
 </script>
 
+<style>
+    .script-font { font-family: 'Pacifico', cursive; }
+    .active { background-color: #4c51bf; color: white; }
+    .batch-btn { transition: background-color 0.3s, color 0.3s; }
+    .batch-btn:hover { background-color: #4c51bf; color: white; }
+    .student-card { transition: transform 0.3s, box-shadow 0.3s; }
+    .student-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+    .swiper { width: 100%; padding-bottom: 40px; }
+    .swiper-slide { background: #fff; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; position: relative; display: flex; flex-direction: column; align-items: center; }
+    .swiper-slide img { width: 100%; height: 120px; object-fit: cover; }
+    .swiper-pagination { bottom: 0 !important; }
+    .swiper-button-prev, .swiper-button-next { color: #ffffff; width: 30px; height: 30px; border-radius: 50%; background-color: rgba(0, 0, 0, 0.5); }   
+    @media (max-width: 1023px) {
+        .student-card, .swiper-slide { min-width: 50% !important; max-width: 50% !important; }
+    }
+    @media (max-width: 639px) {
+        .student-card, .swiper-slide { min-width: 100% !important; max-width: 100% !important; }
+    }
+</style>
 @endsection

@@ -91,13 +91,33 @@
   });
 </script>
 
+
+<script>
+  const text = "Welcome to the Ministry of Commerce";
+  let index = 0;
+
+  function typeEffect() {
+    if (index < text.length) {
+      document.getElementById("typing-text").innerHTML += text.charAt(index);
+      index++;
+      setTimeout(typeEffect, 100); // typing speed (in ms)
+    }
+  }
+
+  // Start typing when the page loads
+  window.onload = typeEffect;
+</script>
+
 <!-- Enhanced Hero Section -->
 <section  class="relative h-[500px] md:h-[600px] overflow-hidden flex items-center justify-center bg-gray-700">
     <div data-aos="fade-right">
 <img src="{{ asset('images/main.png') }}" alt="Office" class="absolute inset-0 w-full h-full object-cover filter  scale-105 transition-transform duration-10000 hover:scale-110">
     <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40"></div>
     <div data-aos="fade-right" class="relative z-10 text-center px-4 text-white max-w-4xl mx-auto animate-fadeIn" style="animation-delay: 0.2s;">
-        <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">Welcome to the Ministry of Commerce</h1>
+       <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+  <span id="typing-text"></span>
+</h1>
+
         <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto text-gray-100">Empowering businesses and fostering growth in Myanmar</p>
         <div class="mt-8 flex flex-wrap justify-center gap-4">
             <a href="#services" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-lg font-medium transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">Our Services</a>
