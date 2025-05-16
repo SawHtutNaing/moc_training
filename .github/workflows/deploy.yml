@@ -20,7 +20,7 @@ jobs:
         extensions: mbstring, bcmath, xml, curl, mysql
         coverage: none
 
-    - name: Deploy to server (only git pull)
+    - name: Deploy to server (git pull, migrate, npm install)
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         SSH_USER: ${{ secrets.SSH_USER }}
@@ -31,4 +31,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i private_key $SSH_USER@$SSH_HOST << 'EOF'
           cd /var/www/moc_training
           git pull origin master
+          php artisan migrate --force
+          npm install
+          npm run build
         EOF
