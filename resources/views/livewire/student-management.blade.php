@@ -18,6 +18,12 @@
         <button wire:click="openModal" class="bg-info text-light px-4 py-2 rounded-md hover:bg-primary transition-colors">
             Add Student
         </button>
+         <button
+        wire:click="export"
+        class="bg-success text-light px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
+    >
+        Export Students
+    </button>
     </div>
 
     <!-- Modal -->
@@ -26,6 +32,18 @@
         <div class="bg-light rounded-md p-6 w-full max-w-2xl max-h-[80vh] overflow-y-auto">
             <h2 class="text-xl text-primary mb-4">{{ $studentId ? 'Edit Student' : 'Add Student' }}</h2>
             <form wire:submit="save">
+                
+<div>
+    <label for="profile_image">Profile Image</label>
+    <input wire:model="profile_image" id="profile_image" type="file" accept="image/*" class="w-full border-gray-300 rounded-md p-2">
+    @if ($existingProfileImage)
+        <div class="mt-2">
+            <img src="{{ Storage::url($existingProfileImage) }}" alt="Profile Image" class="w-20 h-20 rounded-full">
+        </div>
+    @endif
+    @error('profile_image') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+</div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div data-flux-field>
                         <label data-flux-label for="name">Name</label>
@@ -81,32 +99,43 @@
     </div>
 
     <!-- Students Table -->
-    <livewire:custom-table wire:key="students-{{ $students->count() }}-{{ $students->pluck('id')->join('-') }}"
-        :config="[
-            'columns' => [
-                ['label' => 'Name', 'key' => 'name'],
-                ['label' => 'Date of Birth', 'key' => 'dob'],
-                ['label' => 'Gender', 'key' => 'gender'],
-                ['label' => 'NRC', 'key' => 'nrc'],
-                ['label' => 'Phone', 'key' => 'phone'],
-                ['label' => 'Email', 'key' => 'email'],
-                ['label' => 'Address', 'key' => 'address'],
+  
+<livewire:custom-table wire:key="students-{{ $students->currentPage() }}-{{ $students->total() }}-{{ $refreshKey }}"
+    :config="[
+        'columns' => [
+            ['label' => 'ID', 'key' => 'id'],
+            ['label' => 'Profile Image', 'key' => 'profile_image'], // Add profile image column here
+            ['label' => 'Name', 'key' => 'name'],
+            ['label' => 'Date of Birth', 'key' => 'dob'],
+            ['label' => 'Gender', 'key' => 'gender_label'],
+            ['label' => 'NRC', 'key' => 'nrc'],
+            ['label' => 'Phone', 'key' => 'phone'],
+            ['label' => 'Email', 'key' => 'email'],
+            ['label' => 'Address', 'key' => 'address'],
+        ],
+        'data' => $data,
+        'actions' => [
+            [
+                'label' => 'Edit',
+                'event' => 'edit-student',
+                'class' => 'bg-info text-light px-3 py-1 rounded-md hover:bg-primary transition-colors',
             ],
-            'data' => $students,
-            'actions' => [
-                [
-                    'label' => 'Edit',
-                    'event' => 'edit-student',
-                    'class' => 'bg-info text-light px-3 py-1 rounded-md hover:bg-primary transition-colors',
-                ],
-                [
-                    'label' => 'Delete',
-                    'event' => 'delete-student',
-                    'class' => 'bg-red-500 text-light px-3 py-1 rounded-md hover:bg-red-600 transition-colors',
-                    'confirm' => true,
-                    'confirmMessage' => 'Are you sure you want to delete this student? This will also delete associated enrollments.'
-                ],
+            [
+                'label' => 'Delete',
+                'event' => 'delete-student',
+                'class' => 'bg-red-500 text-light px-3 py-1 rounded-md hover:bg-red-600 transition-colors',
+                'confirm' => true,
+                'confirmMessage' => 'Are you sure you want to delete this student? This will also delete associated enrollments.'
             ],
-            'emptyMessage' => 'No students found.'
-        ]" />
+        ],
+        'emptyMessage' => 'No students found.'
+    ]"
+/>
+
+    <!-- Pagination Links -->
+    @if ($students instanceof \Illuminate\Pagination\LengthAwarePaginator)
+        <div class="mt-4">
+            {{ $students->links('components.pagination-links') }}
+        </div>
+    @endif
 </div>

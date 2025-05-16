@@ -18,6 +18,12 @@
         <button wire:click="openModal" class="bg-info text-light px-4 py-2 rounded-md hover:bg-primary transition-colors">
             Add Course
         </button>
+        <button
+        wire:click="export"
+        class="bg-success text-white px-4 py-2 rounded hover:bg-green-700 transition"
+    >
+        Export Courses
+    </button>
     </div>
 
     <!-- Modal -->
@@ -51,7 +57,7 @@
             'columns' => [
                 ['label' => 'Name', 'key' => 'name'],
             ],
-            'data' => $courses,
+             'data' => $data, 
             'actions' => [
                 [
                     'label' => 'Edit',
@@ -68,4 +74,10 @@
             ],
             'emptyMessage' => 'No courses found.'
         ]" />
+        @if ($courses instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    <div class="mt-4">
+        {{ $courses->links('components.pagination-links') }}
+    </div>
+@endif
+
 </div>

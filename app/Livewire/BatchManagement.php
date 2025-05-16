@@ -1,16 +1,19 @@
 <?php
 
 namespace App\Livewire;
+use Symfony\Component\HttpFoundation\StreamedResponse; // Make sure this is at the top with your other use statements
 
 use App\Models\Batch;
 use App\Models\Course;
+use Livewire\WithPagination;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\On;
 
 class BatchManagement extends Component
 {
-    public $batches;
+    use WithPagination;
+
     public $courses;
     public $batchId = null;
     public $showModal = false;
@@ -35,13 +38,12 @@ class BatchManagement extends Component
 
     public function mount()
     {
-        $this->loadBatches();
         $this->courses = Course::all(['id', 'name']);
     }
 
-    public function loadBatches()
+    public function updating()
     {
-        $this->batches = Batch::with('course')->get();
+        $this->resetPage(); // Reset pagination when updated
     }
 
     public function openModal()
@@ -69,16 +71,12 @@ class BatchManagement extends Component
         ];
 
         if ($this->batchId) {
-            // Update existing batch
-            $batch = Batch::findOrFail($this->batchId);
-            $batch->update($data);
+            Batch::findOrFail($this->batchId)->update($data);
         } else {
-            // Create new batch
             Batch::create($data);
         }
 
         $this->closeModal();
-        $this->loadBatches();
         $this->dispatch('notify', message: $this->batchId ? 'Batch updated successfully!' : 'Batch created successfully!');
     }
 
@@ -100,7 +98,6 @@ class BatchManagement extends Component
     public function delete($id)
     {
         Batch::findOrFail($id)->delete();
-        $this->loadBatches();
         $this->dispatch('notify', message: 'Batch deleted successfully!');
     }
 
@@ -116,8 +113,47 @@ class BatchManagement extends Component
         $this->resetValidation();
     }
 
+public function export(): StreamedResponse
+{
+    $filename = 'batches_' . now()->format('Y-m-d_H-i-s') . '.csv';
+
+    return response()->streamDownload(function () {
+        $handle = fopen('php://output', 'w');
+
+        // Header row
+        fputcsv($handle, [
+            'ID',
+            'Name',
+            'Course',
+            'Timetable',
+            'Start Date',
+            'End Date',
+            'Fees',
+        ]);
+
+        // Batch rows
+        Batch::with('course')->cursor()->each(function ($batch) use ($handle) {
+            fputcsv($handle, [
+                $batch->id,
+                $batch->name,
+                optional($batch->course)->name,
+                $batch->timetable,
+                $batch->start_date,
+                $batch->end_date,
+                $batch->fees,
+            ]);
+        });
+
+        fclose($handle);
+    }, $filename);
+}
+
+    
     public function render()
     {
-        return view('livewire.batch-management');
+        return view('livewire.batch-management', [
+            'batches' => Batch::with('course')->paginate(5),
+        ]);
     }
+    
 }

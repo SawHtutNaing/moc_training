@@ -7,18 +7,20 @@
         <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-            <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+            <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" >
 
             </a>
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item icon="users" :href="route('student')" :current="request()->routeIs('student')" wire:navigate>{{ __('Students') }}</flux:navlist.item>
-                    <flux:navlist.item icon="users" :href="route('teacher')" :current="request()->routeIs('teacher')" wire:navigate>{{ __('Teacher') }}</flux:navlist.item>
-                    <flux:navlist.item icon="users" :href="route('batch')" :current="request()->routeIs('batch')" wire:navigate>{{ __('Batch') }}</flux:navlist.item>
-                    <flux:navlist.item icon="users" :href="route('course')" :current="request()->routeIs('course')" wire:navigate>{{ __('Course') }}</flux:navlist.item>
-                    <flux:navlist.item icon="users" :href="route('enroll')" :current="request()->routeIs('enroll')" wire:navigate>{{ __('Enroll') }}</flux:navlist.item>
+                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" >{{ __('Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('student')" :current="request()->routeIs('student')" >{{ __('Students') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('teacher')" :current="request()->routeIs('teacher')" >{{ __('Teacher') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('batch')" :current="request()->routeIs('batch')" >{{ __('Batch') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('course')" :current="request()->routeIs('course')" >{{ __('Course') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('enroll')" :current="request()->routeIs('enroll')" >{{ __('Enroll') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('batchdetails')" :current="request()->routeIs('enroll')" >{{ __('BatchDetails') }}</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('gallery')" :current="request()->routeIs('enroll')" >{{ __('Gallery') }}</flux:navlist.item>
 
                 </flux:navlist.group>
             </flux:navlist>
@@ -57,7 +59,7 @@
                     <flux:menu.separator />
 
                     <flux:menu.radio.group>
-                        <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
+                        <flux:menu.item :href="route('settings.profile')" icon="cog" >{{ __('Settings') }}</flux:menu.item>
                     </flux:menu.radio.group>
 
                     <flux:menu.separator />
@@ -107,7 +109,7 @@
                     <flux:menu.separator />
 
                     <flux:menu.radio.group>
-                        <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
+                        <flux:menu.item :href="route('settings.profile')" icon="cog" >{{ __('Settings') }}</flux:menu.item>
                     </flux:menu.radio.group>
 
                     <flux:menu.separator />

@@ -55,7 +55,7 @@
         <td class="px-4 py-2">{{$student->email}}</td>
         <td class="px-4 py-2">{{$student->address}}</td>
         <td class="px-4 py-2 space-x-2">
-          <a href="{{route('student.edit',$student->id)}}" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Edit</a>
+          <a href="{{route('student.edit',$student->id)}}" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"><x-far-edit /></a>
           <button wire:click="delete({{$student->id}})" wire:confirm="Are you sure you want to delete" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
         </td>
       </tr>

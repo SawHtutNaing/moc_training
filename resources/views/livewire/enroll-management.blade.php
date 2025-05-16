@@ -18,6 +18,12 @@
         <button wire:click="openModal" class="bg-info text-light px-4 py-2 rounded-md hover:bg-primary transition-colors">
             Add Enrollment
         </button>
+        <button
+        wire:click="export"
+        class="bg-success text-white px-4 py-2 rounded hover:bg-green-700 transition"
+    >
+        Export Enrolls
+    </button>
     </div>
 
     <!-- Modal -->
@@ -73,7 +79,7 @@
                 ['label' => 'Student', 'key' => 'student.name'],
                 ['label' => 'Enrollment Date', 'key' => 'enroll_date'],
             ],
-            'data' => $enrollments,
+            'data' => $enrollments->items(), 
             'actions' => [
                 [
                     'label' => 'Edit',
@@ -90,4 +96,10 @@
             ],
             'emptyMessage' => 'No enrollments found.'
         ]" />
+@if ($enrollments instanceof \Illuminate\Pagination\LengthAwarePaginator)
+    <div class="mt-4">
+        {{ $enrollments->links('components.pagination-links') }}
+    </div>
+@endif
+
 </div>

@@ -18,7 +18,18 @@
         <button wire:click="openModal" class="bg-info text-light px-4 py-2 rounded-md hover:bg-primary transition-colors">
             Add Teacher
         </button>
+        <button
+        wire:click="export"
+        class="bg-success text-light px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
+    >
+        Export Teachers
+    </button>
     </div>
+
+    <!-- Export Button
+<div class="mb-4 flex justify-end">
+    
+</div> -->
 
     <!-- Modal -->
     <div x-data="{ open: @entangle('showModal') }" x-show="open" x-cloak
@@ -27,6 +38,16 @@
             <h2 class="text-xl text-primary mb-4">{{ $teacherId ? 'Edit Teacher' : 'Add Teacher' }}</h2>
             <form wire:submit="save">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="profile_image">Profile Image</label>
+                        <input wire:model="profile_image" id="profile_image" type="file" accept="image/*" class="w-full border-gray-300 rounded-md p-2">
+                        @if ($existingProfileImage)
+                            <div class="mt-2">
+                                <img src="{{ Storage::url($existingProfileImage) }}" alt="Profile Image" class="w-20 h-20 rounded-full">
+                            </div>
+                        @endif
+                        @error('profile_image') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                    </div>
                     <div data-flux-field>
                         <label data-flux-label for="name">Name</label>
                         <input wire:model="name" id="name" type="text" data-flux-control class="w-full border-gray-300 rounded-md p-2">
@@ -94,13 +115,18 @@
     <livewire:custom-table wire:key="teachers-{{ $teachers->count() }}-{{ $teachers->pluck('id')->join('-') }}"
         :config="[
             'columns' => [
+                ['label' => 'ID', 'key' => 'id'],
+                ['label' => 'Profile Image', 'key' => 'profile_image'],
                 ['label' => 'Name', 'key' => 'name'],
+                ['label' => 'DOB', 'key' => 'dob'],
+                ['label' => 'Gender', 'key' => 'gender'],
+                ['label' => 'NRC', 'key' => 'nrc'],
                 ['label' => 'Position', 'key' => 'position'],
                 ['label' => 'Organization', 'key' => 'organization'],
                 ['label' => 'Email', 'key' => 'email'],
                 ['label' => 'Phone', 'key' => 'phone'],
             ],
-            'data' => $teachers,
+            'data' => $data,
             'actions' => [
                 [
                     'label' => 'Edit',
@@ -117,4 +143,11 @@
             ],
             'emptyMessage' => 'No teachers found.'
         ]" />
+         <!-- Pagination Links -->
+    @if ($teachers instanceof \Illuminate\Pagination\LengthAwarePaginator)
+        <div class="mt-4">
+            {{ $teachers->links('components.pagination-links') }}
+        </div>
+        
+    @endif
 </div>
